@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: florist
+
+elasticpathcloud:
+  pcm:
+    baseUrl: https://useast.api.elasticpath.com/pcm
+    authUrl: https://useast.api.elasticpath.com
+    clientId: eYSp7n5pTQ1uD8E253ooicnr5tMpd4BxHvFp8Di8Wu
+    clientSecret: 3mwE2NCtsn8vpKOOVU1y1i5CvFzDCbEcXxrerQ1vL6
+    getHierarchies.path: /hierarchies
+    getHierarchyChildNodes.path: /hierarchies/{hierarchyId}/children
+    getProducts.path: /products
+    getNodeProducts.path: /hierarchies/{hierarchyId}/nodes/{nodeId}/products
+    getVariations.path: /variations
+    getClientCredentials.path: /oauth/access_token
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/florist

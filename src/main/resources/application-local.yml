@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/marketplace
+    username: postgres
+    password: Sergio55
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database: postgresql
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/florist
+logging:
+  level:
+    reactor.netty.http.client: DEBUG
+    org.springframework.web.reactive.function.client.ExchangeFunctions: DEBUG,
+    org:
+      hibernate:
+        type: TRACE
+        sql: DEBUG
+
