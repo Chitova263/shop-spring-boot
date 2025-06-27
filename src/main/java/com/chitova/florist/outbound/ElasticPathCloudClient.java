@@ -1,5 +1,7 @@
 package com.chitova.florist.outbound;
 
+import com.chitova.elasticpathcloud.pim.model.MultiHierarchy;
+import com.chitova.elasticpathcloud.pim.model.MultiNodes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -38,7 +40,7 @@ public class ElasticPathCloudClient {
         this.getVariationsPath = getVariationsPath;
     }
 
-    public ElasticPathCloudHierarchiesResponse getHierarchies() {
+    public MultiHierarchy getHierarchies() {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
@@ -48,11 +50,11 @@ public class ElasticPathCloudClient {
                         .path(getHierarchiesPath)
                         .build())
                 .retrieve()
-                .bodyToMono(ElasticPathCloudHierarchiesResponse.class)
+                .bodyToMono(MultiHierarchy.class)
                 .block();
     }
 
-    public ElasticPathCloudHierarchyChildNodes getHierarchyChildNodes(final String hierarchyId) {
+    public MultiNodes getHierarchyChildNodes(final String hierarchyId) {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
@@ -63,7 +65,7 @@ public class ElasticPathCloudClient {
                         .path(getHierarchyChildNodesPath)
                         .build(hierarchyId))
                 .retrieve()
-                .bodyToMono(ElasticPathCloudHierarchyChildNodes.class)
+                .bodyToMono(MultiNodes.class)
                 .block();
     }
 

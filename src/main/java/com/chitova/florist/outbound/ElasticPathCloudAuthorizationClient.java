@@ -1,5 +1,6 @@
 package com.chitova.florist.outbound;
 
+import com.chitova.elasticpathcloud.authentication.model.AccessTokenResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -34,7 +35,7 @@ public class ElasticPathCloudAuthorizationClient {
         this.clientSecret = clientSecret;
     }
 
-    public Mono<ElasticPathCloudClientCredentialsResponse> getClientCredentials() {
+    public Mono<AccessTokenResponse> getClientCredentials() {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("grant_type", ElasticPathCloudAuthorizationClient.GRANT_TYPE);
         formData.add("client_id", clientId);
@@ -50,7 +51,7 @@ public class ElasticPathCloudAuthorizationClient {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .bodyValue(formData)
                 .retrieve()
-                .bodyToMono(ElasticPathCloudClientCredentialsResponse.class);
+                .bodyToMono(AccessTokenResponse.class);
     }
 
     public  ExchangeFilterFunction addAuthorizationFilter() {

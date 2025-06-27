@@ -1,5 +1,8 @@
 package com.chitova.florist.services;
 
+import com.chitova.elasticpathcloud.pim.model.Hierarchy;
+import com.chitova.elasticpathcloud.pim.model.MultiHierarchy;
+import com.chitova.elasticpathcloud.pim.model.MultiNodes;
 import com.chitova.florist.entities.Category;
 import com.chitova.florist.entities.ChildProduct;
 import com.chitova.florist.entities.Product;
@@ -31,9 +34,9 @@ public class ProductSyncService {
     }
 
     public void synchronize() {
-        final ElasticPathCloudHierarchiesResponse multiHierarchy = this.elasticPathCloudClient.getHierarchies();
-        final ElasticPathCloudHierarchiesResponse.DataItem hierarchy = multiHierarchy.getData().get(0);
-        final ElasticPathCloudHierarchyChildNodes multiNodes = elasticPathCloudClient.getHierarchyChildNodes(hierarchy.getId());
+        final MultiHierarchy multiHierarchy = this.elasticPathCloudClient.getHierarchies();
+        final Hierarchy hierarchy = multiHierarchy.getData().get(0);
+        final MultiNodes multiNodes = elasticPathCloudClient.getHierarchyChildNodes(hierarchy.getId());
         final List<Category> categories = multiNodes.getData()
                 .stream()
                 .map(node -> Category.builder()
@@ -42,7 +45,6 @@ public class ProductSyncService {
                         .description(node.getAttributes().getDescription())
                         .elasticPathCloudCategoryId(node.getId())
                         .elasticPathCloudHierarchyId(hierarchy.getId())
-                        .hasChildren(node.getMeta().isHasChildren())
                         .build())
                 .collect(Collectors.toList());
         categoryRepository.saveAll(categories);
