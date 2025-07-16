@@ -24,4 +24,5 @@ logging:
       hibernate:
         type: TRACE
         sql: DEBUG
+    org.springframework.security: DEBUG
 

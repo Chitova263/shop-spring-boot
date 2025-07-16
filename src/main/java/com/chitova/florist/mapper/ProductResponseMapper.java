@@ -1,10 +1,10 @@
 package com.chitova.florist.mapper;
 
-import com.chitova.florist.entities.Category;
-import com.chitova.florist.entities.ChildProduct;
-import com.chitova.florist.entities.Product;
-import com.chitova.florist.entities.Variation;
-import com.chitova.florist.model.GetProductsResponse;
+import com.chitova.florist.entities.product.Category;
+import com.chitova.florist.entities.product.ChildProduct;
+import com.chitova.florist.entities.product.Product;
+import com.chitova.florist.entities.product.Variation;
+import com.chitova.florist.model.product.GetProductsResponse;
 
 import java.util.*;
 import java.util.stream.Collectors;

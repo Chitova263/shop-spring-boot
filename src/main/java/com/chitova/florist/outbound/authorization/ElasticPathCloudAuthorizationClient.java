@@ -1,4 +1,4 @@
-package com.chitova.florist.outbound;
+package com.chitova.florist.outbound.authorization;
 
 import com.chitova.elasticpathcloud.authentication.model.AccessTokenResponse;
 import org.springframework.beans.factory.annotation.Value;

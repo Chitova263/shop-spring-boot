@@ -1,4 +1,4 @@
-package com.chitova.florist.entities;
+package com.chitova.florist.entities.product;
 
 import lombok.Builder;
 

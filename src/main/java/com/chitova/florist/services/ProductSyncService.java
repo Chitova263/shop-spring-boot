@@ -3,12 +3,15 @@ package com.chitova.florist.services;
 import com.chitova.elasticpathcloud.pim.model.Hierarchy;
 import com.chitova.elasticpathcloud.pim.model.MultiHierarchy;
 import com.chitova.elasticpathcloud.pim.model.MultiNodes;
-import com.chitova.florist.entities.Category;
-import com.chitova.florist.entities.ChildProduct;
-import com.chitova.florist.entities.Product;
-import com.chitova.florist.entities.Variation;
-import com.chitova.florist.entities.VariationOption;
-import com.chitova.florist.outbound.*;
+import com.chitova.florist.entities.product.Category;
+import com.chitova.florist.entities.product.ChildProduct;
+import com.chitova.florist.entities.product.Product;
+import com.chitova.florist.entities.product.Variation;
+import com.chitova.florist.entities.product.VariationOption;
+import com.chitova.florist.outbound.products.ElasticPathCloudMultiProductsResponseAccessor;
+import com.chitova.florist.outbound.products.models.ElasticPathCloudNodeProductsResponse;
+import com.chitova.florist.outbound.products.ElasticPathCloudProductExperienceManagerClient;
+import com.chitova.florist.outbound.products.models.ElasticPathCloudProductsResponse;
 import com.chitova.florist.repositories.CategoryRepository;
 import com.chitova.florist.repositories.ProductRepository;
 import org.bson.types.ObjectId;
@@ -20,11 +23,11 @@ import java.util.stream.Collectors;
 @Component
 public class ProductSyncService {
 
-    private final ElasticPathCloudClient elasticPathCloudClient;
+    private final ElasticPathCloudProductExperienceManagerClient elasticPathCloudClient;
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
 
-    public ProductSyncService(final ElasticPathCloudClient elasticPathCloudClient,
+    public ProductSyncService(final ElasticPathCloudProductExperienceManagerClient elasticPathCloudClient,
                               final CategoryRepository categoryRepository,
                               final ProductRepository productRepository
     ) {

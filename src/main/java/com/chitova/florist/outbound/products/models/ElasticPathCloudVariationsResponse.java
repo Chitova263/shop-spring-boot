@@ -1,4 +1,4 @@
-package com.chitova.florist.outbound;
+package com.chitova.florist.outbound.products.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

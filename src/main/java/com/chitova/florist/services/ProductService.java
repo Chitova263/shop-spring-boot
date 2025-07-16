@@ -1,9 +1,9 @@
 package com.chitova.florist.services;
 
-import com.chitova.florist.entities.Category;
-import com.chitova.florist.entities.Product;
+import com.chitova.florist.entities.product.Category;
+import com.chitova.florist.entities.product.Product;
 import com.chitova.florist.mapper.ProductResponseMapper;
-import com.chitova.florist.model.GetProductsResponse;
+import com.chitova.florist.model.product.GetProductsResponse;
 import com.chitova.florist.repositories.CategoryRepository;
 import com.chitova.florist.repositories.ProductRepository;
 import org.springframework.stereotype.Service;

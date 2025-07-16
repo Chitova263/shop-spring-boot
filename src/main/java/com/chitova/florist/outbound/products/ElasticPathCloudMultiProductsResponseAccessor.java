@@ -1,4 +1,6 @@
-package com.chitova.florist.outbound;
+package com.chitova.florist.outbound.products;
+
+import com.chitova.florist.outbound.products.models.ElasticPathCloudProductsResponse;
 
 import java.util.*;
 
