@@ -13,6 +13,7 @@ public class OpenIdConnectConfiguration {
     private String clientSecret;
     private String responseType;
     private String scope;
+    private String authorizationUrl;
     private boolean requireHttps;
     private boolean strictDiscoveryDocumentValidation;
     private boolean showDebugInformation;

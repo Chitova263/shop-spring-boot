@@ -1,11 +1,7 @@
 package com.chitova.florist.outbound.products;
 
-import com.chitova.elasticpathcloud.pim.model.MultiHierarchy;
-import com.chitova.elasticpathcloud.pim.model.MultiNodes;
 import com.chitova.florist.outbound.authorization.ElasticPathCloudAuthorizationClient;
-import com.chitova.florist.outbound.products.models.ElasticPathCloudNodeProductsResponse;
-import com.chitova.florist.outbound.products.models.ElasticPathCloudProductsResponse;
-import com.chitova.florist.outbound.products.models.ElasticPathCloudVariationsResponse;
+import com.chitova.florist.outbound.products.models.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -20,6 +16,7 @@ public class ElasticPathCloudProductExperienceManagerClient {
     private final String getHierarchyChildNodesPath;
     private final String getProductsPath;
     private final String getNodeProductsPath;
+    private final String getNodeChildrenPath;
     private final String getVariationsPath;
 
 
@@ -30,9 +27,8 @@ public class ElasticPathCloudProductExperienceManagerClient {
                                                           @Value("${elasticpathcloud.pcm.getHierarchyChildNodes.path}") final String getHierarchyChildNodesPath,
                                                           @Value("${elasticpathcloud.pcm.getProducts.path}") final String getProductsPath,
                                                           @Value("${elasticpathcloud.pcm.getNodeProducts.path}") final String getNodeProductsPath,
-                                                          @Value("${elasticpathcloud.pcm.getVariations.path}") final String getVariationsPath,
-                                                          @Value("${elasticpathcloud.pcm.clientId}") final String clientId,
-                                                          @Value("${elasticpathcloud.pcm.clientSecret}") final String clientSecret
+                                                          @Value("${elasticpathcloud.pcm.getNodeChildren.path}") final String getNodeChildrenPath,
+                                                          @Value("${elasticpathcloud.pcm.getVariations.path}") final String getVariationsPath
                                   ) {
         this.webClientBuilder = webClientBuilder;
         this.elasticPathCloudAuthorizationClient = elasticPathCloudAuthorizationClient;
@@ -41,10 +37,11 @@ public class ElasticPathCloudProductExperienceManagerClient {
         this.getHierarchyChildNodesPath = getHierarchyChildNodesPath;
         this.getProductsPath = getProductsPath;
         this.getNodeProductsPath = getNodeProductsPath;
+        this.getNodeChildrenPath = getNodeChildrenPath;
         this.getVariationsPath = getVariationsPath;
     }
 
-    public MultiHierarchy getHierarchies() {
+    public ElasticPathCloudHierarchiesResponse getHierarchies() {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
@@ -54,11 +51,11 @@ public class ElasticPathCloudProductExperienceManagerClient {
                         .path(getHierarchiesPath)
                         .build())
                 .retrieve()
-                .bodyToMono(MultiHierarchy.class)
+                .bodyToMono(ElasticPathCloudHierarchiesResponse.class)
                 .block();
     }
 
-    public MultiNodes getHierarchyChildNodes(final String hierarchyId) {
+    public ElasticPathCloudHierarchyChildNodesResponse getHierarchyChildNodes(final String hierarchyId) {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
@@ -69,7 +66,22 @@ public class ElasticPathCloudProductExperienceManagerClient {
                         .path(getHierarchyChildNodesPath)
                         .build(hierarchyId))
                 .retrieve()
-                .bodyToMono(MultiNodes.class)
+                .bodyToMono(ElasticPathCloudHierarchyChildNodesResponse.class)
+                .block();
+    }
+
+    public ElasticPathCloudNodeChildrenResponse getNodeChildrenResponse(final String hierarchyId, final String nodeId) {
+        return webClientBuilder
+                .clone()
+                .baseUrl(baseUrl)
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
+                .build()
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(getNodeChildrenPath)
+                        .build(hierarchyId, nodeId))
+                .retrieve()
+                .bodyToMono(ElasticPathCloudNodeChildrenResponse.class)
                 .block();
     }
 

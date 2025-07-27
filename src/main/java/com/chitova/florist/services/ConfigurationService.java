@@ -34,6 +34,7 @@ public class ConfigurationService {
                                         .strictDiscoveryDocumentValidation(openIdConnectConfiguration.isStrictDiscoveryDocumentValidation())
                                         .clientId(openIdConnectConfiguration.getClientId())
                                         .requireHttps(openIdConnectConfiguration.isRequireHttps())
+                                        .authorizationUrl(openIdConnectConfiguration.getAuthorizationUrl())
                                         .build())
                                 .collect(Collectors.toSet()))
                         .build())

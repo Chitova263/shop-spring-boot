@@ -6,6 +6,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Getter
 @Builder
@@ -27,6 +30,9 @@ public class Category {
     @Field(name = "elastic_path_cloud_hierarchy_id")
     private String elasticPathCloudHierarchyId;
 
-    @Field(name = "has_children")
+    @Field(name = "hasChildren")
     private boolean hasChildren;
+
+    @Field(name = "subcategories")
+    private List<Category> subcategories = new ArrayList<Category>();
 }

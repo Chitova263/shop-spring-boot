@@ -20,8 +20,8 @@ public class IdentityUserService {
         return IdentityUser.builder()
                 .sub(jwt.getSubject())
                 .email(jwt.getClaimAsString("email"))
-                .firstname(Optional.ofNullable(jwt.getClaimAsString("given_name")).orElse(null))
-                .lastname(Optional.ofNullable(jwt.getClaimAsString("family_name")).orElse(null))
+                .firstname(jwt.getClaimAsString("given_name"))
+                .lastname(jwt.getClaimAsString("family_name"))
                 .emailVerified(jwt.getClaimAsBoolean("email_verified"))
                 .build();
     }

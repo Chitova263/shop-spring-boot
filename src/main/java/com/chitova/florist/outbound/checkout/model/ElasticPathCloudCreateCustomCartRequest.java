@@ -14,6 +14,7 @@ public class ElasticPathCloudCreateCustomCartRequest {
     public static class DataPayload {
         private String name;
         private String description;
+        private Contact contact;
 
         @JsonProperty("discount_settings")
         private DiscountSettings discountSettings;
@@ -25,4 +26,12 @@ public class ElasticPathCloudCreateCustomCartRequest {
         @JsonProperty("custom_discounts_enabled")
         private boolean customDiscountsEnabled;
     }
+
+    @Data
+    @Builder
+    public static class Contact {
+        private String email;
+    }
+
+
 }

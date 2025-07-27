@@ -8,6 +8,9 @@ spring:
         jwt:
           issuer-uri: https://accounts.google.com
 
+logging:
+  rest: true
+
 elasticpathcloud:
   pcm:
     baseUrl: https://useast.api.elasticpath.com/pcm
@@ -17,6 +20,7 @@ elasticpathcloud:
     getHierarchies.path: /hierarchies
     getHierarchyChildNodes.path: /hierarchies/{hierarchyId}/children
     getProducts.path: /products
+    getNodeChildren.path: /hierarchies/{hierarchyId}/nodes/{nodeId}/children
     getNodeProducts.path: /hierarchies/{hierarchyId}/nodes/{nodeId}/products
     getVariations.path: /variations
     getClientCredentials.path: /oauth/access_token

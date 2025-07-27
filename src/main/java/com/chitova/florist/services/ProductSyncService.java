@@ -9,6 +9,7 @@ import com.chitova.florist.entities.product.Product;
 import com.chitova.florist.entities.product.Variation;
 import com.chitova.florist.entities.product.VariationOption;
 import com.chitova.florist.outbound.products.ElasticPathCloudMultiProductsResponseAccessor;
+import com.chitova.florist.outbound.products.models.ElasticPathCloudHierarchiesResponse;
 import com.chitova.florist.outbound.products.models.ElasticPathCloudNodeProductsResponse;
 import com.chitova.florist.outbound.products.ElasticPathCloudProductExperienceManagerClient;
 import com.chitova.florist.outbound.products.models.ElasticPathCloudProductsResponse;
@@ -36,20 +37,27 @@ public class ProductSyncService {
         this.productRepository = productRepository;
     }
 
+
+
     public void synchronize() {
-        final MultiHierarchy multiHierarchy = this.elasticPathCloudClient.getHierarchies();
-        final Hierarchy hierarchy = multiHierarchy.getData().get(0);
-        final MultiNodes multiNodes = elasticPathCloudClient.getHierarchyChildNodes(hierarchy.getId());
-        final List<Category> categories = multiNodes.getData()
+        final var hierarchies = this.elasticPathCloudClient.getHierarchies();
+        final var hierarchy = hierarchies.getData().stream().findFirst().orElseThrow();
+
+        final var hierarchyChildNodes = elasticPathCloudClient.getHierarchyChildNodes(hierarchy.getId());
+        var categories = hierarchyChildNodes.getData()
                 .stream()
                 .map(node -> Category.builder()
                         .id(new ObjectId())
                         .name(node.getAttributes().getName())
-                        .description(node.getAttributes().getDescription())
+                        .description(node.getAttributes().getName())
                         .elasticPathCloudCategoryId(node.getId())
                         .elasticPathCloudHierarchyId(hierarchy.getId())
+                        .hasChildren(node.getMeta().isHasChildren())
+                        .subcategories(new ArrayList<>())
                         .build())
                 .collect(Collectors.toList());
+
+        getCategoriesRecursively(categories);
         categoryRepository.saveAll(categories);
 
         HashMap<String, ArrayList<Category>> productToCategoryMap = new HashMap<>();
@@ -120,4 +128,38 @@ public class ProductSyncService {
                 .collect(Collectors.toList());
         productRepository.saveAll(products);
     }
+
+    private void getCategoriesRecursively(List<Category> categories) {
+        if(categories.isEmpty()) {
+            return;
+        }
+        final var categoriesWithChildNodes = categories
+                .stream()
+                .filter(category -> category.isHasChildren())
+                .collect(Collectors.toList());
+
+        List<Category> allChildrenCategories = new ArrayList<>();
+        // For each of the categories fetch the children and push them to result list
+        for (final Category category : categoriesWithChildNodes) {
+            var nodeChildrenResponse = elasticPathCloudClient
+                    .getNodeChildrenResponse(category.getElasticPathCloudHierarchyId(), category.getElasticPathCloudCategoryId());
+            var subCategories = nodeChildrenResponse.getData()
+                    .stream()
+                    .map(node -> Category.builder()
+                            .id(new ObjectId())
+                            .name(node.getAttributes().getName())
+                            .description(node.getAttributes().getName())
+                            .elasticPathCloudCategoryId(node.getId())
+                            .elasticPathCloudHierarchyId(category.getElasticPathCloudHierarchyId())
+                            .hasChildren(node.getMeta().isHasChildren())
+                            .subcategories(new ArrayList<>())
+                            .build())
+                    .collect(Collectors.toList());
+            category.getSubcategories().addAll(subCategories);
+
+            allChildrenCategories.addAll(subCategories);
+        }
+        getCategoriesRecursively(allChildrenCategories);
+    }
 }
+

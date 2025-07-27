@@ -2,6 +2,7 @@ package com.chitova.florist.controller;
 
 import com.chitova.florist.services.AccountSettingsSyncService;
 import com.chitova.florist.services.ProductSyncService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,12 +21,14 @@ class AdministratorController {
         this.accountSettingsSyncService = accountSettingsSyncService;
     }
 
+    @Operation()
     @PostMapping("/synchronize/catalog")
     public ResponseEntity syncProducts() {
         productSyncService.synchronize();
         return ResponseEntity.noContent().build();
     }
 
+    @Operation()
     @PostMapping("/synchronize/accounts")
     public ResponseEntity syncAccounts() {
         accountSettingsSyncService.syncAccountSettings();
