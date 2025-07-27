@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Products")
-@RequestMapping("/florist-api")
 @RestController
 public class ProductsController {
     private final ProductService productService;

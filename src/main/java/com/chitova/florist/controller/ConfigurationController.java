@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Configuration")
-@RequestMapping("/florist-api")
 @RestController
 public class ConfigurationController {
     private final ConfigurationService configurationService;

@@ -25,7 +25,7 @@ public class AccountSettingsSyncService {
         //client id data meta client id
 
         String realmId = accountAuthenticationSettingsResponse.getData().getRelationships().getAuthenticationRealm().getData().getId();
-        ElasticPathCloudAccountAuthenticationRealmOidcProfilesResponse oidcProfilesResponse = elasticPathCloudAccountsClient.getAccountAuthenticationRealmOidcProfilesResponse(realmId);
+        ElasticPathCloudAccountAuthenticationRealmOidcProfilesResponse oidcProfilesResponse = elasticPathCloudAccountsClient.getAccountAuthenticationRealmOidcProfiles(realmId);
         ElasticPathCloudPasswordProfilesResponse passwordProfilesResponse = elasticPathCloudAccountsClient.getPasswordProfiles(realmId);
 
         System.out.println(oidcProfilesResponse);

@@ -39,7 +39,7 @@ public class ElasticPathCloudCheckoutClient {
     public ElasticPathCloudCreateCustomCartResponse createCustomCart(ElasticPathCloudCreateCustomCartRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(createCustomCartPath).build())
@@ -55,7 +55,7 @@ public class ElasticPathCloudCheckoutClient {
             final ElasticPathCloudCreateAccountCartAssociationRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(createAccountCartAssociationPath).build(cartId))
@@ -71,7 +71,7 @@ public class ElasticPathCloudCheckoutClient {
             final ElasticPathCloudBulkAddItemsToCartRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(createBulkAddItemsToCartPath).build(cartId))
@@ -87,7 +87,7 @@ public class ElasticPathCloudCheckoutClient {
             final ElasticPathCloudCheckoutWithAccountManagementTokenRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(checkoutPath).build(cartId))
@@ -103,7 +103,7 @@ public class ElasticPathCloudCheckoutClient {
             final ElasticPathCloudCheckoutAsGuestRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(checkoutPath).build(cartId))

@@ -1,9 +1,9 @@
 package com.chitova.florist.outbound.accounts;
 
-import com.chitova.elasticpathcloud.accounts.model.*;
 import com.chitova.florist.outbound.authorization.ElasticPathCloudAuthorizationClient;
 import com.chitova.florist.outbound.accounts.models.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -13,9 +13,6 @@ public class ElasticPathCloudAccountsClient {
     private final WebClient.Builder webClientBuilder;
     private final ElasticPathCloudAuthorizationClient elasticPathCloudAuthorizationClient;
     private final String baseUrl;
-    private final String createAccountPath;
-    private final String getAccountPath;
-    private final String getAccountsPath;
     private final String generateAccountManagementAuthorizationTokenPath;
     private final String getAccountAuthenticationSettingsPath;
     private final String getAccountAuthenticationRealmOidcProfilesPath;
@@ -28,9 +25,6 @@ public class ElasticPathCloudAccountsClient {
     public ElasticPathCloudAccountsClient(final WebClient.Builder webClientBuilder,
                                           final ElasticPathCloudAuthorizationClient elasticPathCloudAuthorizationClient,
                                           @Value("${elasticpathcloud.accounts.baseUrl}") final String baseUrl,
-                                          @Value("${elasticpathcloud.accounts.createAccount.path}") final String createAccountPath,
-                                          @Value("${elasticpathcloud.accounts.getAccount.path}") final String getAccountPath,
-                                          @Value("${elasticpathcloud.accounts.getAccounts.path}") final String getAccountsPath,
                                           @Value("${elasticpathcloud.accounts.generateAccountManagementAuthorizationToken.path}") final String generateAccountManagementAuthorizationTokenPath,
                                           @Value("${elasticpathcloud.accounts.getAccountAuthenticationSettings.path}") final String getAccountAuthenticationSettingsPath,
                                           @Value("${elasticpathcloud.accounts.getAccountAuthenticationRealmOidcProfiles.path}") final String getAccountAuthenticationRealmOidcProfilesPath,
@@ -42,9 +36,6 @@ public class ElasticPathCloudAccountsClient {
         this.webClientBuilder = webClientBuilder;
         this.elasticPathCloudAuthorizationClient = elasticPathCloudAuthorizationClient;
         this.baseUrl = baseUrl;
-        this.createAccountPath = createAccountPath;
-        this.getAccountPath = getAccountPath;
-        this.getAccountsPath = getAccountsPath;
         this.generateAccountManagementAuthorizationTokenPath = generateAccountManagementAuthorizationTokenPath;
         this.getAccountAuthenticationSettingsPath = getAccountAuthenticationSettingsPath;
         this.getAccountAuthenticationRealmOidcProfilesPath = getAccountAuthenticationRealmOidcProfilesPath;
@@ -54,10 +45,11 @@ public class ElasticPathCloudAccountsClient {
         this.createOneTimePasswordTokenPath = createOneTimePasswordTokenPath;
     }
 
+    @Cacheable(cacheNames = "elasticPathCloudAccountAuthenticationSettings")
     public ElasticPathCloudAccountAuthenticationSettingsResponse getAccountAuthenticationSettings() {
         return this.webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -69,10 +61,14 @@ public class ElasticPathCloudAccountsClient {
                 .block();
     }
 
-    public ElasticPathCloudAccountAuthenticationRealmOidcProfilesResponse getAccountAuthenticationRealmOidcProfilesResponse (final String authenticationRealmId) {
+    @Cacheable(
+            cacheNames = "elasticPathCloudAccountAuthenticationRealmOidcProfiles",
+            key = "#authenticationRealmId"
+    )
+    public ElasticPathCloudAccountAuthenticationRealmOidcProfilesResponse getAccountAuthenticationRealmOidcProfiles(final String authenticationRealmId) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -83,10 +79,14 @@ public class ElasticPathCloudAccountsClient {
                 .block();
     }
 
+    @Cacheable(
+            cacheNames = "elasticPathCloudPasswordProfiles",
+            key = "#authenticationRealmId"
+    )
     public ElasticPathCloudPasswordProfilesResponse getPasswordProfiles(final String authenticationRealmId) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -102,7 +102,7 @@ public class ElasticPathCloudAccountsClient {
             final ElasticPathCloudCreateUserAuthenticationInfoRequest elasticPathCloudCreateUserAuthenticationInfo) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder
@@ -121,7 +121,7 @@ public class ElasticPathCloudAccountsClient {
             final ElasticPathCloudCreateUserAuthenticationPasswordProfileRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder
@@ -139,7 +139,7 @@ public class ElasticPathCloudAccountsClient {
             final ElasticPathCloudCreateOneTimePasswordTokenRequest request) {
         webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder
@@ -156,7 +156,7 @@ public class ElasticPathCloudAccountsClient {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder
@@ -167,52 +167,4 @@ public class ElasticPathCloudAccountsClient {
                 .bodyToMono(ElasticPathCloudGenerateAccountManagementTokenResponse.class)
                 .block();
     }
-
-    public PostV2Accounts201Response createAccount(final PostV2AccountsRequest request) {
-        return webClientBuilder
-                .clone()
-                .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
-                .build()
-                .post()
-                .uri(uriBuilder -> uriBuilder
-                        .path(createAccountPath)
-                        .build())
-                .bodyValue(request)
-                .retrieve()
-                .bodyToMono(PostV2Accounts201Response.class)
-                .block();
-    }
-
-    public GetV2Accounts200Response getAccount(final String accountId) {
-        return webClientBuilder
-                .clone()
-                .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
-                .build()
-                .get()
-                .uri(uriBuilder -> uriBuilder
-                        .path(getAccountPath)
-                        .build(accountId))
-                .retrieve()
-                .bodyToMono(GetV2Accounts200Response.class)
-                .block();
-    }
-
-    public GetV2Accounts200Response getAccounts() {
-        return webClientBuilder
-                .clone()
-                .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
-                .build()
-                .get()
-                .uri(uriBuilder -> uriBuilder
-                        .path(getAccountsPath)
-                        .build())
-                .retrieve()
-                .bodyToMono(GetV2Accounts200Response.class)
-                .block();
-    }
-
-
 }

@@ -54,7 +54,7 @@ public class ElasticPathCloudAuthorizationClient {
                 .bodyToMono(AccessTokenResponse.class);
     }
 
-    public  ExchangeFilterFunction addAuthorizationFilter() {
+    public  ExchangeFilterFunction authorizationHeaderFilter() {
         return (request, next) -> getClientCredentials()
                 .flatMap(elasticPathCloudClientCredentialsResponse -> {
                     final ClientRequest modifiedRequest = ClientRequest.from(request)

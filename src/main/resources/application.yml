@@ -22,9 +22,6 @@ elasticpathcloud:
     getClientCredentials.path: /oauth/access_token
   accounts:
     baseUrl: https://useast.api.elasticpath.com
-    createAccount.path: /v2/accounts
-    getAccount.path: /v2/accounts/{accountID}
-    getAccounts.path: /v2/accounts
     generateAccountManagementAuthorizationToken.path: v2/account-members/tokens
     getAccountAuthenticationSettings.path: /v2/settings/account-authentication
     getAccountAuthenticationRealmOidcProfiles.path: /v2/authentication-realms/{authenticationRealmId}/oidc-profiles
@@ -33,6 +30,7 @@ elasticpathcloud:
     createUserAuthenticationPasswordProfile.path:  /v2/authentication-realms/{authenticationRealmId}/user-authentication-info/{userAuthenticationInfoId}/user-authentication-password-profile-info
     createOneTimePasswordToken.path : /v2/authentication-realms/{authenticationRealmId}/password-profiles/{passwordProfileId}/one-time-password-token-request
   carts:
+    baseUrl: https://useast.api.elasticpath.com
     createCustomCart.path: /v2/carts
     createAccountCartAssociation.path: v2/carts/{cartId}/relationships/accounts
     createBulkAddItemsToCart.path: /v2/carts/{cartId}/items

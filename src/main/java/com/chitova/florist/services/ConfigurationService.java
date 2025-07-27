@@ -2,9 +2,9 @@ package com.chitova.florist.services;
 
 import com.chitova.florist.model.configuration.GetConfigurationResponse;
 import com.chitova.florist.repositories.ConfigurationRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -16,6 +16,7 @@ public class ConfigurationService {
         this.configurationRepository = configurationRepository;
     }
 
+    @Cacheable("configuration")
     public GetConfigurationResponse getConfiguration() {
         return configurationRepository.findAll()
                 .stream()

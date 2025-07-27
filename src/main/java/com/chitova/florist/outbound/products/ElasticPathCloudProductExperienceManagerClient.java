@@ -48,7 +48,7 @@ public class ElasticPathCloudProductExperienceManagerClient {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .get().uri(uriBuilder -> uriBuilder
                         .path(getHierarchiesPath)
@@ -62,7 +62,7 @@ public class ElasticPathCloudProductExperienceManagerClient {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -77,7 +77,7 @@ public class ElasticPathCloudProductExperienceManagerClient {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -92,7 +92,7 @@ public class ElasticPathCloudProductExperienceManagerClient {
             return webClientBuilder
                     .clone()
                     .baseUrl(baseUrl)
-                    .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                    .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                     .build()
                     .get()
                     .uri(uriBuilder -> uriBuilder
@@ -107,7 +107,7 @@ public class ElasticPathCloudProductExperienceManagerClient {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.addAuthorizationFilter())
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .get()
                 .uri(uriBuilder -> uriBuilder
