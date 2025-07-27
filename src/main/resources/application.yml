@@ -8,6 +8,9 @@ spring:
         jwt:
           issuer-uri: https://accounts.google.com
 
+logging:
+  rest: true
+
 elasticpathcloud:
   pcm:
     baseUrl: https://useast.api.elasticpath.com/pcm

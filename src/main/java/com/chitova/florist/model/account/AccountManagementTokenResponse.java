@@ -1,4 +1,4 @@
-package com.chitova.florist.model.accounts;
+package com.chitova.florist.model.account;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

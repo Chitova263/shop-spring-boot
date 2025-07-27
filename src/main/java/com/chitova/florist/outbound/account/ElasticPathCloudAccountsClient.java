@@ -1,7 +1,7 @@
-package com.chitova.florist.outbound.accounts;
+package com.chitova.florist.outbound.account;
 
 import com.chitova.florist.outbound.authorization.ElasticPathCloudAuthorizationClient;
-import com.chitova.florist.outbound.accounts.models.*;
+import com.chitova.florist.outbound.account.models.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -151,8 +151,25 @@ public class ElasticPathCloudAccountsClient {
                 .block();
     }
 
-    public ElasticPathCloudGenerateAccountManagementTokenResponse generateAccountManagementAuthorizationToken(
+    public ElasticPathCloudGenerateAccountManagementTokenResponse generateAccountManagementAuthorizationTokenUsernamePassword(
             final ElasticPathCloudGenerateAccountManagementTokenUsernameAndPasswordRequest request) {
+        return webClientBuilder
+                .clone()
+                .baseUrl(baseUrl)
+                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
+                .build()
+                .post()
+                .uri(uriBuilder -> uriBuilder
+                        .path(generateAccountManagementAuthorizationTokenPath)
+                        .build())
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(ElasticPathCloudGenerateAccountManagementTokenResponse.class)
+                .block();
+    }
+
+    public ElasticPathCloudGenerateAccountManagementTokenResponse generateAccountManagementTokenOidc(
+            final ElasticPathCloudGenerateAccountManagementTokenOIDCRequest request) {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)

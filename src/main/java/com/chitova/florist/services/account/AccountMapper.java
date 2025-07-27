@@ -1,9 +1,9 @@
-package com.chitova.florist.services.accounts;
+package com.chitova.florist.services.account;
 
-import com.chitova.florist.model.accounts.RegisterAccountRequest;
-import com.chitova.florist.outbound.accounts.models.*;
+import com.chitova.florist.model.account.RegisterAccountRequest;
+import com.chitova.florist.outbound.account.models.*;
 
-public final class AccountsMapper {
+public final class AccountMapper {
     public static ElasticPathCloudCreateOneTimePasswordTokenRequest createOneTimePasswordTokenRequest(final String email) {
         return ElasticPathCloudCreateOneTimePasswordTokenRequest.builder()
                 .data(ElasticPathCloudCreateOneTimePasswordTokenRequest.OtpTokenRequestData.builder()

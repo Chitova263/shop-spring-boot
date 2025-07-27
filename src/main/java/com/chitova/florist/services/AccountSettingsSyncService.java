@@ -1,9 +1,9 @@
 package com.chitova.florist.services;
 
-import com.chitova.florist.outbound.accounts.ElasticPathCloudAccountsClient;
-import com.chitova.florist.outbound.accounts.models.ElasticPathCloudAccountAuthenticationSettingsResponse;
-import com.chitova.florist.outbound.accounts.models.ElasticPathCloudAccountAuthenticationRealmOidcProfilesResponse;
-import com.chitova.florist.outbound.accounts.models.ElasticPathCloudPasswordProfilesResponse;
+import com.chitova.florist.outbound.account.ElasticPathCloudAccountsClient;
+import com.chitova.florist.outbound.account.models.ElasticPathCloudAccountAuthenticationSettingsResponse;
+import com.chitova.florist.outbound.account.models.ElasticPathCloudAccountAuthenticationRealmOidcProfilesResponse;
+import com.chitova.florist.outbound.account.models.ElasticPathCloudPasswordProfilesResponse;
 import com.chitova.florist.repositories.ConfigurationRepository;
 import org.springframework.stereotype.Service;
 

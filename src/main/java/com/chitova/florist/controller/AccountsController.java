@@ -1,100 +1,54 @@
 package com.chitova.florist.controller;
 
-import com.chitova.florist.model.accounts.GenerateAccountManagementTokenRequest;
-import com.chitova.florist.model.accounts.RegisterAccountRequest;
-import com.chitova.florist.model.accounts.AccountManagementTokenResponse;
-import com.chitova.florist.services.accounts.AccountsService;
+import com.chitova.florist.model.account.GenerateAccountManagementTokenOidcRequest;
+import com.chitova.florist.model.account.GenerateAccountManagementTokenRequest;
+import com.chitova.florist.model.account.RegisterAccountRequest;
+import com.chitova.florist.model.account.AccountManagementTokenResponse;
+import com.chitova.florist.services.account.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.http.ProblemDetail;
+
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Accounts")
+@Tag(name = "Accounts", description = "Operations for managing accounts")
 @RestController
 public class AccountsController {
 
-    private final AccountsService accountsService;
+    private final AccountService accountService;
 
-    public AccountsController(final AccountsService accountsService) {
-        this.accountsService = accountsService;
+    public AccountsController(final AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @Operation(
             summary = "Register a new Elastic Path Cloud account",
-            description = "Creates a new account in Elastic Path Cloud",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Account registration successful",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = AccountManagementTokenResponse.class)
-                            )
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Validation error",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = ProblemDetail.class)
-                            )
-                    ),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = ProblemDetail.class)
-                            )
-                    )
-            }
+            description = "Creates a new account in Elastic Path Cloud"
     )
-    @PostMapping("/accounts/register")
+    @PostMapping(value = "/accounts/register", produces = {  MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<AccountManagementTokenResponse> registerAccount(@RequestBody @Valid final RegisterAccountRequest request) {
-        AccountManagementTokenResponse response = accountsService.registerAccount(request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(accountService.registerAccount(request));
     }
 
     @Operation(
             summary = "Retrieve an account management token",
-            description = "Returns account management token used for account management operations.",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Account management token retrieved successfully",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = AccountManagementTokenResponse.class)
-                            )
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Validation error",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = ProblemDetail.class)
-                            )
-                    ),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = ProblemDetail.class)
-                            )
-                    )
-            }
+            description = "Returns account management token used for account management operations."
     )
-    @PostMapping("/accounts/token")
+    @PostMapping(value = "/accounts/token/password", produces = {  MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<AccountManagementTokenResponse> generateAccountManagementToken(@RequestBody @Valid final GenerateAccountManagementTokenRequest request) {
-        AccountManagementTokenResponse response = accountsService.generateAccountManagementToken(request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(accountService.generateAccountManagementToken(request));
+    }
+
+    @Operation(
+            summary = "Retrieve an account management token",
+            description = "Returns account management token used for account management operations."
+    )
+    @PostMapping(value = "/accounts/token/oidc", produces = {  MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<AccountManagementTokenResponse> generateAccountManagementTokenOidc(@RequestBody @Valid final GenerateAccountManagementTokenOidcRequest request) {
+        return ResponseEntity.ok(accountService.generateAccountManagementToken(request));
     }
 }

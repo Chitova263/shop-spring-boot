@@ -1,22 +1,23 @@
-
-
-package com.chitova.florist.outbound.accounts.models;
+package com.chitova.florist.outbound.account.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class ElasticPathCloudCreateUserAuthenticationInfoResponse {
+public class ElasticPathCloudCreateUserAuthenticationPasswordProfileResponse {
 
-    private UserAuthenticationInfo data;
+    private UserPasswordProfileInfo data;
     private Links links;
 
     @Data
-    public static class UserAuthenticationInfo {
+    public static class UserPasswordProfileInfo {
         private String id;
-        private String name;
-        private String email;
+        private String username;
         private String type;
+
+        @JsonProperty("password_profile_id")
+        private String passwordProfileId;
+
         private Meta meta;
 
         @Data
@@ -26,9 +27,6 @@ public class ElasticPathCloudCreateUserAuthenticationInfoResponse {
 
             @JsonProperty("updated_at")
             private String updatedAt;
-
-            @JsonProperty("creation_status")
-            private String creationStatus;
         }
     }
 

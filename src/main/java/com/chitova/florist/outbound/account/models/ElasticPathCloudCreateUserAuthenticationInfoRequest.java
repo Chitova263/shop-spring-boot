@@ -1,4 +1,4 @@
-package com.chitova.florist.outbound.accounts.models;
+package com.chitova.florist.outbound.account.models;
 
 import lombok.Builder;
 import lombok.Data;

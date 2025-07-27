@@ -1,5 +1,4 @@
-package com.chitova.florist.outbound.accounts.models;
-
+package com.chitova.florist.outbound.account.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -7,10 +6,10 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ElasticPathCloudAccountAuthenticationRealmOidcProfilesResponse {
+public class ElasticPathCloudPasswordProfilesResponse {
 
     private Meta meta;
-    private List<OidcProfile> data;
+    private List<PasswordProfile> data;
     private Links links;
 
     @Data
@@ -33,24 +32,22 @@ public class ElasticPathCloudAccountAuthenticationRealmOidcProfilesResponse {
     }
 
     @Data
-    public static class OidcProfile {
+    public static class PasswordProfile {
         private String id;
         private String name;
         private String type;
 
-        @JsonProperty("discovery_url")
-        private String discoveryUrl;
+        @JsonProperty("username_format")
+        private String usernameFormat;
 
-        @JsonProperty("client_id")
-        private String clientId;
+        @JsonProperty("enable_one_time_password_token")
+        private boolean enableOneTimePasswordToken;
 
         private Meta meta;
         private Links links;
 
         @Data
         public static class Meta {
-            private String issuer;
-
             @JsonProperty("created_at")
             private String createdAt;
 
@@ -60,15 +57,6 @@ public class ElasticPathCloudAccountAuthenticationRealmOidcProfilesResponse {
 
         @Data
         public static class Links {
-            @JsonProperty("authorization-endpoint")
-            private String authorizationEndpoint;
-
-            @JsonProperty("client-discovery-url")
-            private String clientDiscoveryUrl;
-
-            @JsonProperty("callback-endpoint")
-            private String callbackEndpoint;
-
             private String self;
         }
     }

@@ -1,6 +1,7 @@
 package com.chitova.florist.model.checkout;
 
 import io.swagger.v3.oas.annotations.media.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.List;
@@ -10,14 +11,16 @@ public class UpdateCartRequest {
     @Schema(description = "Cart identifier")
     private String cartId;
 
-    @Schema(description = "Items added to the cart")
+    @NotNull
+    @Schema(description = "Cart items")
     private List<CartItem> cartItems;
 
     @Data
     public static class CartItem {
-        @Schema(description = "Product sku", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotNull
+        @Schema(description = "Product SKU code")
         private String sku;
-        @Schema(description = "Quantity", requiredMode = Schema.RequiredMode.REQUIRED)
+        @Schema(description = "Number of items")
         private int quantity;
     }
 }

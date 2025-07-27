@@ -24,24 +24,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-//                    .requestMatchers("/florist-api/configuration",
-//                            "/v3/api-docs/**",
-//                            "/swagger-ui/**",
-//                            "/swagger-ui.html")
-//                        .permitAll()
-                    //.anyRequest().authenticated()
-                                .anyRequest().permitAll()
-            )
-            .oauth2ResourceServer(oauth2 -> oauth2
-                    .jwt(jwt -> jwt
-                            .jwtAuthenticationConverter(jwtAuthenticationConverter())
-                    )
-            )
-            .csrf(AbstractHttpConfigurer::disable)
-            .cors(Customizer.withDefaults())
-            .formLogin(AbstractHttpConfigurer::disable)
-            .httpBasic(AbstractHttpConfigurer::disable)
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                    .requestMatchers("/configuration",
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html")
+                        .permitAll()
+                    .anyRequest().authenticated()
+                        //.anyRequest().permitAll()
+                )
+               .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt
+                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                        )
+               )
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
 
@@ -60,7 +60,6 @@ public class SecurityConfig {
     }
 
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        return converter;
+        return new JwtAuthenticationConverter();
     }
 }

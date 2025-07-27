@@ -1,10 +1,10 @@
-package com.chitova.florist.services.accounts;
+package com.chitova.florist.services.account;
 
-import com.chitova.florist.outbound.accounts.models.ElasticPathCloudAccountAuthenticationSettingsResponse;
-import com.chitova.florist.outbound.accounts.models.ElasticPathCloudGenerateAccountManagementTokenResponse;
-import com.chitova.florist.outbound.accounts.models.ElasticPathCloudPasswordProfilesResponse;
+import com.chitova.florist.outbound.account.models.ElasticPathCloudAccountAuthenticationSettingsResponse;
+import com.chitova.florist.outbound.account.models.ElasticPathCloudGenerateAccountManagementTokenResponse;
+import com.chitova.florist.outbound.account.models.ElasticPathCloudPasswordProfilesResponse;
 
-public final class AccountsResponseAccessor {
+public final class AccountResponseAccessor {
     public static String getAuthenticationRealmId(final ElasticPathCloudAccountAuthenticationSettingsResponse accountAuthenticationSettingsResponse) {
         final String authenticationRealmId = accountAuthenticationSettingsResponse.getData()
                 .getRelationships()

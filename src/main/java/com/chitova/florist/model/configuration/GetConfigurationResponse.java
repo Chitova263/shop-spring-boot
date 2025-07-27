@@ -33,6 +33,9 @@ public class GetConfigurationResponse {
 
         private String clientSecret;
 
+        @Schema(description = "oidc provider redirect client id")
+        private String authorizationUrl;
+
         @Schema(description = "oidc response type")
         private String responseType;
 

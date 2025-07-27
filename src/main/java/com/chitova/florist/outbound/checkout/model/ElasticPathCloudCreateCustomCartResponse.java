@@ -1,21 +1,19 @@
 package com.chitova.florist.outbound.checkout.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 public class ElasticPathCloudCreateCustomCartResponse {
     private CartData data;
 
     @Data
-    @Builder
     public static class CartData {
         private String id;
         private String type;
         private String name;
         private String description;
+        private Contact contact;
 
         @JsonProperty("discount_settings")
         private DiscountSettings discountSettings;
@@ -29,36 +27,35 @@ public class ElasticPathCloudCreateCustomCartResponse {
     }
 
     @Data
-    @Builder
+    public static class Contact {
+        private String email;
+    }
+
+    @Data
     public static class DiscountSettings {
         @JsonProperty("custom_discounts_enabled")
         private boolean customDiscountsEnabled;
     }
 
     @Data
-    @Builder
     public static class InventorySettings {
         @JsonProperty("defer_inventory_check")
         private boolean deferInventoryCheck;
     }
 
     @Data
-    @Builder
     public static class Links {
         private String self;
     }
 
     @Data
-    @Builder
     public static class Meta {
         @JsonProperty("display_price")
         private DisplayPrice displayPrice;
-
         private Timestamps timestamps;
     }
 
     @Data
-    @Builder
     public static class DisplayPrice {
         @JsonProperty("with_tax")
         private Price withTax;
@@ -79,7 +76,6 @@ public class ElasticPathCloudCreateCustomCartResponse {
     }
 
     @Data
-    @Builder
     public static class Price {
         private int amount;
         private String currency;
@@ -87,7 +83,6 @@ public class ElasticPathCloudCreateCustomCartResponse {
     }
 
     @Data
-    @Builder
     public static class Timestamps {
         @JsonProperty("created_at")
         private String createdAt;
@@ -100,14 +95,12 @@ public class ElasticPathCloudCreateCustomCartResponse {
     }
 
     @Data
-    @Builder
     public static class Relationships {
         private Items items;
     }
 
     @Data
-    @Builder
     public static class Items {
-        private Object data; // Could be null, or change to List<ItemData> if structured
+        private Object data; // Replace with List<ItemData> or appropriate type if known
     }
 }
