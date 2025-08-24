@@ -1,4 +1,4 @@
-package com.chitova.florist.outbound.products.models;
+package com.chitova.florist.outbound.products.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class ElasticPathCloudVariationsResponse {
+public class ElasticPathVariationsResponse {
 
     @JsonProperty("data")
     private List<ProductVariation> data;

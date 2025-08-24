@@ -20,7 +20,7 @@ public class ConfigurationController {
 
     @Operation(summary = "Get application configuration", description = "Returns application configuration")
     @GetMapping(value = "/configuration", produces = {  MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<GetConfigurationResponse> getConfiguration() {
-        return ResponseEntity.ok(configurationService.getConfiguration());
+    public GetConfigurationResponse getConfiguration() {
+        return configurationService.getConfiguration();
     }
 }

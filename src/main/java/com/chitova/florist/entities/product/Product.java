@@ -43,5 +43,5 @@ public class Product {
     private Set<ChildProduct> childProducts;
 
     @Field(name = "categories")
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories;
 }

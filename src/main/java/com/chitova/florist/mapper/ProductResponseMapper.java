@@ -11,29 +11,34 @@ import java.util.stream.Collectors;
 
 public class ProductResponseMapper {
 
-    public static List<GetProductsResponse.Category> getProductResponseCategories(List<Category> categories, Map<String, ArrayList<Product>> categoryToProducts) {
+    public static List<GetProductsResponse.Category> getProductResponseCategories(final List<Category> categories,
+                                                                                  final Map<String, ArrayList<Product>> categoryToProducts) {
         return categories.stream()
                 .map(category -> ProductResponseMapper.mapCategory(category, categoryToProducts))
                 .collect(Collectors.toList());
     }
 
-    private static GetProductsResponse.Category mapCategory(Category category, Map<String, ArrayList<Product>> categoryToProducts) {
+    private static GetProductsResponse.Category mapCategory(final Category category, final Map<String, ArrayList<Product>> categoryToProducts) {
         return GetProductsResponse.Category.builder()
                 .name(category.getName())
                 .description(category.getDescription())
+                .slug(category.getSlug())
                 .products(ProductResponseMapper.getProductsOfCategory(category, categoryToProducts))
-                .subCategories(Collections.emptyList())
+                .subCategories(category.getSubcategories()
+                        .stream()
+                        .map(subCategory -> ProductResponseMapper.mapCategory(subCategory, categoryToProducts))
+                        .collect(Collectors.toList()))
                 .build();
     }
 
-    private static List<GetProductsResponse.Product> getProductsOfCategory(Category category, Map<String, ArrayList<Product>> categoryToProducts) {
-        return Optional.ofNullable(categoryToProducts.get(category.getName())).orElse(new ArrayList<Product>())
+    private static List<GetProductsResponse.Product> getProductsOfCategory(final Category category, final Map<String, ArrayList<Product>> categoryToProducts) {
+        return Optional.ofNullable(categoryToProducts.get(category.getName())).orElse(new ArrayList<>())
                 .stream()
                 .map(ProductResponseMapper::mapProduct)
                 .collect(Collectors.toList());
     }
 
-    private static GetProductsResponse.Product mapProduct(Product product) {
+    private static GetProductsResponse.Product mapProduct(final Product product) {
         return GetProductsResponse.Product.builder()
                 .sku(product.getSku())
                 .name(product.getName())
@@ -47,7 +52,7 @@ public class ProductResponseMapper {
                 .build();
     }
 
-    private static GetProductsResponse.Variant mapVariants(ChildProduct childProduct) {
+    private static GetProductsResponse.Variant mapVariants(final ChildProduct childProduct) {
         return GetProductsResponse.Variant.builder()
                 .sku(childProduct.getSku())
                 .name(childProduct.getName())
@@ -60,7 +65,7 @@ public class ProductResponseMapper {
                 .build();
     }
 
-    private static GetProductsResponse.Variation mapVariations(Variation variation) {
+    private static GetProductsResponse.Variation mapVariations(final Variation variation) {
         return GetProductsResponse.Variation.builder()
                 .name(variation.getName())
                 .option(GetProductsResponse.VariationOption.builder()

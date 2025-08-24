@@ -1,4 +1,4 @@
-package com.chitova.florist.services;
+package com.chitova.florist.services.product;
 
 import com.chitova.florist.entities.product.Category;
 import com.chitova.florist.entities.product.Product;
@@ -28,7 +28,7 @@ public class ProductService {
         return ProductService.getGetProductsResponse(products, categories);
     }
 
-    private static GetProductsResponse getGetProductsResponse(List<Product> products, List<Category> categories) {
+    private static GetProductsResponse getGetProductsResponse(final List<Product> products, final List<Category> categories) {
         final Map<String, ArrayList<Product>> categoryToProducts = new HashMap<>();
         for (final Product product : products) {
             for (final Category category : product.getCategories()) {

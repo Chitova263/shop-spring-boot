@@ -24,6 +24,9 @@ public class Category {
     @Field(name = "description")
     private String description;
 
+    @Field(name = "slug")
+    private String slug;
+
     @Field(name = "elastic_path_cloud_category_id")
     private String elasticPathCloudCategoryId;
 
@@ -34,5 +37,5 @@ public class Category {
     private boolean hasChildren;
 
     @Field(name = "subcategories")
-    private List<Category> subcategories = new ArrayList<Category>();
+    private List<Category> subcategories;
 }

@@ -1,6 +1,6 @@
 package com.chitova.florist.outbound.checkout;
 
-import com.chitova.florist.outbound.authorization.ElasticPathCloudAuthorizationClient;
+import com.chitova.florist.outbound.authorization.ElasticPathAuthorizationClient;
 import com.chitova.florist.outbound.checkout.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ public class ElasticPathCloudCheckoutClient {
 
     public static final String EP_ACCOUNT_MANAGEMENT_AUTHENTICATION_TOKEN = "EP-Account-Management-Authentication-Token";
     private final WebClient.Builder webClientBuilder;
-    private final ElasticPathCloudAuthorizationClient elasticPathCloudAuthorizationClient;
+    private final ElasticPathAuthorizationClient elasticPathCloudAuthorizationClient;
     private final String baseUrl;
     private final String createCustomCartPath;
     private final String createAccountCartAssociationPath;
@@ -20,7 +20,7 @@ public class ElasticPathCloudCheckoutClient {
 
 
     public ElasticPathCloudCheckoutClient(final WebClient.Builder webClientBuilder,
-                                          final ElasticPathCloudAuthorizationClient elasticPathCloudAuthorizationClient,
+                                          final ElasticPathAuthorizationClient elasticPathCloudAuthorizationClient,
                                           @Value("${elasticpathcloud.accounts.baseUrl}") final String baseUrl,
                                           @Value("${elasticpathcloud.carts.createCustomCart.path}") final String createCustomCartPath,
                                           @Value("${elasticpathcloud.carts.createAccountCartAssociation.path}") final String createAccountCartAssociationPath,
@@ -39,7 +39,6 @@ public class ElasticPathCloudCheckoutClient {
     public ElasticPathCloudCreateCustomCartResponse createCustomCart(ElasticPathCloudCreateCustomCartRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(createCustomCartPath).build())
@@ -55,7 +54,6 @@ public class ElasticPathCloudCheckoutClient {
             final ElasticPathCloudCreateAccountCartAssociationRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(createAccountCartAssociationPath).build(cartId))
@@ -71,7 +69,6 @@ public class ElasticPathCloudCheckoutClient {
             final ElasticPathCloudBulkAddItemsToCartRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(createBulkAddItemsToCartPath).build(cartId))
@@ -87,7 +84,6 @@ public class ElasticPathCloudCheckoutClient {
             final ElasticPathCloudCheckoutWithAccountManagementTokenRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(checkoutPath).build(cartId))
@@ -103,7 +99,6 @@ public class ElasticPathCloudCheckoutClient {
             final ElasticPathCloudCheckoutAsGuestRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(checkoutPath).build(cartId))

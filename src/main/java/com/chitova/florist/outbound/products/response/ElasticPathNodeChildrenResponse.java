@@ -1,4 +1,4 @@
-package com.chitova.florist.outbound.products.models;
+package com.chitova.florist.outbound.products.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ElasticPathCloudNodeChildrenResponse {
+public class ElasticPathNodeChildrenResponse {
 
     private List<NodeData> data;
     private Meta meta;
@@ -24,6 +24,7 @@ public class ElasticPathCloudNodeChildrenResponse {
     public static class Attributes {
         private String name;
         private String slug;
+        private String description;
     }
 
     @Data

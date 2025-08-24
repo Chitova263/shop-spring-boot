@@ -1,24 +1,25 @@
-package com.chitova.florist.outbound.products.models;
+package com.chitova.florist.outbound.products.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Data
 @NoArgsConstructor
-public class ElasticPathCloudNodeProductsResponse {
+public class ElasticPathProductsResponse {
 
     @JsonProperty("data")
     private List<Product> data;
 
     @JsonProperty("included")
-    private Included included;
+    private IncludedResources included;
 
     @JsonProperty("meta")
-    private Meta meta;
+    private MetaInformation meta;
 
     @Data
     @NoArgsConstructor
@@ -31,7 +32,7 @@ public class ElasticPathCloudNodeProductsResponse {
         private String type;
 
         @JsonProperty("attributes")
-        private Attributes attributes;
+        private ProductAttributes attributes;
 
         @JsonProperty("meta")
         private ProductMeta meta;
@@ -40,10 +41,9 @@ public class ElasticPathCloudNodeProductsResponse {
         private Map<String, Object> relationships;
     }
 
-    // Attributes class for product attributes
     @Data
     @NoArgsConstructor
-    public static class Attributes {
+    public static class ProductAttributes {
 
         @JsonProperty("name")
         private String name;
@@ -79,7 +79,7 @@ public class ElasticPathCloudNodeProductsResponse {
         private List<String> tags;
 
         @JsonProperty("extensions")
-        private Map<String, Object> extensions;
+        private Extensions extensions;
 
         @JsonProperty("custom_inputs")
         private Map<String, Object> customInputs;
@@ -89,6 +89,25 @@ public class ElasticPathCloudNodeProductsResponse {
 
         @JsonProperty("components")
         private Map<String, Object> components;
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class Extensions {
+
+        @JsonProperty("products(flower)")
+        private ProductFlower productFlower;
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class ProductFlower {
+
+        @JsonProperty("additional-information")
+        private String additionalInformation;
+
+        @JsonProperty("information")
+        private String information;
     }
 
     @Data
@@ -119,16 +138,16 @@ public class ElasticPathCloudNodeProductsResponse {
         private String owner;
 
         @JsonProperty("variations")
-        private List<Variation> variations;
+        private List<Variation> variations = new ArrayList<>();
 
         @JsonProperty("custom_relationships")
         private List<Object> customRelationships;
 
         @JsonProperty("child_variations")
-        private List<ChildVariation> childVariations;
+        private List<ChildVariation> childVariations = new ArrayList<>();
 
         @JsonProperty("product_types")
-        private List<String> productTypes;
+        private List<String> productTypes = new ArrayList<>();
 
         @JsonProperty("variation_matrix")
         private Map<String, Object> variationMatrix;
@@ -165,8 +184,9 @@ public class ElasticPathCloudNodeProductsResponse {
         private List<Option> options;
 
         @JsonProperty("option")
-        private Option option;
+        private Option singleOption;
     }
+
 
     @Data
     @NoArgsConstructor
@@ -184,21 +204,21 @@ public class ElasticPathCloudNodeProductsResponse {
 
     @Data
     @NoArgsConstructor
-    public static class Included {
+    public static class IncludedResources {
 
         @JsonProperty("main_images")
-        private List<File> mainImages;
+        private List<FileResource> mainImages;
 
         @JsonProperty("component_products")
         private List<Product> componentProducts;
 
         @JsonProperty("files")
-        private List<File> files;
+        private List<FileResource> files;
     }
 
     @Data
     @NoArgsConstructor
-    public static class File {
+    public static class FileResource {
 
         @JsonProperty("id")
         private String id;
@@ -271,11 +291,12 @@ public class ElasticPathCloudNodeProductsResponse {
 
     @Data
     @NoArgsConstructor
-    public static class Meta {
+    public static class MetaInformation {
 
         @JsonProperty("results")
         private Results results;
     }
+
 
     @Data
     @NoArgsConstructor
@@ -285,4 +306,3 @@ public class ElasticPathCloudNodeProductsResponse {
         private int total;
     }
 }
-

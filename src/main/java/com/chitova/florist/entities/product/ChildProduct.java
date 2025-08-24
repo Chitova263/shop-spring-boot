@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -33,6 +32,6 @@ public class ChildProduct {
     @Field(name = "bestseller")
     private boolean bestseller;
 
-    @Field
-    private Set<Variation> variations = new HashSet<>();
+    @Field(name = "variations")
+    private Set<Variation> variations;
 }

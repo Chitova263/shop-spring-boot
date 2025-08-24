@@ -1,6 +1,6 @@
 package com.chitova.florist.outbound.account;
 
-import com.chitova.florist.outbound.authorization.ElasticPathCloudAuthorizationClient;
+import com.chitova.florist.outbound.authorization.ElasticPathAuthorizationClient;
 import com.chitova.florist.outbound.account.models.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,7 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ElasticPathCloudAccountsClient {
 
     private final WebClient.Builder webClientBuilder;
-    private final ElasticPathCloudAuthorizationClient elasticPathCloudAuthorizationClient;
+    private final ElasticPathAuthorizationClient elasticPathCloudAuthorizationClient;
     private final String baseUrl;
     private final String generateAccountManagementAuthorizationTokenPath;
     private final String getAccountAuthenticationSettingsPath;
@@ -23,7 +23,7 @@ public class ElasticPathCloudAccountsClient {
 
 
     public ElasticPathCloudAccountsClient(final WebClient.Builder webClientBuilder,
-                                          final ElasticPathCloudAuthorizationClient elasticPathCloudAuthorizationClient,
+                                          final ElasticPathAuthorizationClient elasticPathCloudAuthorizationClient,
                                           @Value("${elasticpathcloud.accounts.baseUrl}") final String baseUrl,
                                           @Value("${elasticpathcloud.accounts.generateAccountManagementAuthorizationToken.path}") final String generateAccountManagementAuthorizationTokenPath,
                                           @Value("${elasticpathcloud.accounts.getAccountAuthenticationSettings.path}") final String getAccountAuthenticationSettingsPath,
@@ -49,7 +49,6 @@ public class ElasticPathCloudAccountsClient {
     public ElasticPathCloudAccountAuthenticationSettingsResponse getAccountAuthenticationSettings() {
         return this.webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -68,7 +67,6 @@ public class ElasticPathCloudAccountsClient {
     public ElasticPathCloudAccountAuthenticationRealmOidcProfilesResponse getAccountAuthenticationRealmOidcProfiles(final String authenticationRealmId) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -86,7 +84,6 @@ public class ElasticPathCloudAccountsClient {
     public ElasticPathCloudPasswordProfilesResponse getPasswordProfiles(final String authenticationRealmId) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -102,7 +99,6 @@ public class ElasticPathCloudAccountsClient {
             final ElasticPathCloudCreateUserAuthenticationInfoRequest elasticPathCloudCreateUserAuthenticationInfo) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder
@@ -121,7 +117,6 @@ public class ElasticPathCloudAccountsClient {
             final ElasticPathCloudCreateUserAuthenticationPasswordProfileRequest request) {
         return webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder
@@ -139,7 +134,6 @@ public class ElasticPathCloudAccountsClient {
             final ElasticPathCloudCreateOneTimePasswordTokenRequest request) {
         webClientBuilder.clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder
@@ -156,7 +150,6 @@ public class ElasticPathCloudAccountsClient {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder
@@ -173,7 +166,6 @@ public class ElasticPathCloudAccountsClient {
         return webClientBuilder
                 .clone()
                 .baseUrl(baseUrl)
-                .filter(elasticPathCloudAuthorizationClient.authorizationHeaderFilter())
                 .build()
                 .post()
                 .uri(uriBuilder -> uriBuilder

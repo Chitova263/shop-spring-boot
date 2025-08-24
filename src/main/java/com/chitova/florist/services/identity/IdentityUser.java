@@ -1,4 +1,4 @@
-package com.chitova.florist.services;
+package com.chitova.florist.services.identity;
 
 import lombok.Builder;
 

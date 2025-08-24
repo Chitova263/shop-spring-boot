@@ -20,8 +20,10 @@ elasticpathcloud:
     getHierarchies.path: /hierarchies
     getHierarchyChildNodes.path: /hierarchies/{hierarchyId}/children
     getProducts.path: /products
+    createProduct.path: /products
     getNodeChildren.path: /hierarchies/{hierarchyId}/nodes/{nodeId}/children
     getNodeProducts.path: /hierarchies/{hierarchyId}/nodes/{nodeId}/products
+    associateNodeToProducts.path: /hierarchies/{hierarchyId}/nodes/{nodeId}/relationships/products
     getVariations.path: /variations
     getClientCredentials.path: /oauth/access_token
   accounts:

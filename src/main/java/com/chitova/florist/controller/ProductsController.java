@@ -1,7 +1,7 @@
 package com.chitova.florist.controller;
 
 import com.chitova.florist.model.product.GetProductsResponse;
-import com.chitova.florist.services.ProductService;
+import com.chitova.florist.services.product.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;

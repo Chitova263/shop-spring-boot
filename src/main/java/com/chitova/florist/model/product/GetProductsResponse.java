@@ -22,6 +22,9 @@ public class GetProductsResponse {
         @Schema(description = "Description of the category")
         private String description;
 
+        @Schema(description = "Slug")
+        private String slug;
+
         @Schema(description = "List of subcategories", requiredMode = Schema.RequiredMode.REQUIRED)
         private List<Category> subCategories;
 

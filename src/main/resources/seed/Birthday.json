@@ -1,0 +1,138 @@
+[
+  {
+    "data": {
+      "type": "product",
+      "attributes": {
+        "name": "The Sunny One",
+        "slug": "the-sunny-one",
+        "sku": "NP25BOX0154",
+        "description": "Bursting with joy and colour, this cheerful bouquet is summer in a vase. Featuring a bold sunflower, pink gerbera, fiery celosia, and playful chamomile, it’s the perfect pick-me-up for any day.",
+        "shortDescription": "With free Lindt chocolate\nFresh bouquet straight from the grower\nFast delivery by a courier",
+        "imageUrl": "https://euroflorist.ergonode.cloud/api/multimedia/file/76faebb5-8aaa-4ec6-8f03-fc90af0dafa5.jpg",
+        "status": "live",
+        "commodity_type": "physical",
+        "mpn": "7ead0e28-4c5f-4570-b181-bf18c4e3debd",
+        "upc_ean": ""
+      }
+    }
+  },
+  {
+    "data": {
+      "type": "product",
+      "attributes": {
+        "name": "Emma",
+        "slug": "emma",
+        "sku": "NP25BOX0074",
+        "description": "A bouquet that brings the beauty of a blooming garden straight to your home. With lush pink roses, delicate spray roses and fresh greenery, this arrangement is a perfect mix of elegance and natural charm. Designed to bloom beautifully over time, this bouquet offers long-lasting enjoyment—giving you more beauty for your money.",
+        "shortDescription": "With free Lindt chocolate\nFresh bouquet straight from the grower\nFast delivery by a courier",
+        "imageUrl": "https://euroflorist.ergonode.cloud/api/multimedia/file/08dadd3a-d7f8-4617-9c94-9c448d1504cf.jpg",
+        "status": "live",
+        "commodity_type": "physical",
+        "mpn": "d7431438-37fc-461f-aad2-eb5c3fd7401b",
+        "upc_ean": ""
+      }
+    }
+  },
+  {
+    "data": {
+      "type": "product",
+      "attributes": {
+        "name": "Summer Delight",
+        "slug": "summer-delight",
+        "sku": "NP25FLO0099",
+        "description": "Adorable summer bouquet with pink snapdragons, purple hollyhocks, white santini, xanth flowers, pink spray roses, pale pink roses, green carnations, and matricaria – a colorful and blooming greeting, perfect for birthdays, special anniversaries, and any summer occasion worth celebrating.",
+        "shortDescription": "Personal same-day delivery\nExclusive florist craftsmanship\nEvery bouquet is unique\nAdd chocolate for extra luxury",
+        "imageUrl": "https://euroflorist.ergonode.cloud/api/multimedia/file/fd37fd01-05f9-403b-84a4-67cc22cf2dba.jpg",
+        "status": "live",
+        "commodity_type": "physical",
+        "mpn": "1213d190-dfc6-4e25-a97c-3a6143c1587a",
+        "upc_ean": ""
+      }
+    }
+  },
+  {
+    "data": {
+      "type": "product",
+      "attributes": {
+        "name": "Happy birthday bouquet",
+        "slug": "happy-birthday-bouquet",
+        "sku": "BOU19_25",
+        "description": "Happy birthday! Who will you surprise with fresh birthday flowers? This great value bouquet, designed and delivered by our professional florists, will definitely do the trick. A great effect without breaking your budget.",
+        "shortDescription": "One-of-a-kind bouquet hand-tied by a local florist\nFeatures quality fresh flowers\nQuickly delivered throughout the Netherlands",
+        "imageUrl": "https://euroflorist.ergonode.cloud/api/multimedia/file/b6096c05-a261-4915-b36a-a52617d827e8.jpg",
+        "status": "live",
+        "commodity_type": "physical",
+        "mpn": "d0f84d64-3bea-40ed-98c7-bf7399d22bd4",
+        "upc_ean": ""
+      }
+    }
+  },
+  {
+    "data": {
+      "type": "product",
+      "attributes": {
+        "name": "Colour Festival",
+        "slug": "colour-festival",
+        "sku": "NP24BOX0240",
+        "description": "Introducing Colour Festival, a bouquet that perfectly lives up to its name! With vibrant yellow gerberas, playful pops of orange, and soft purples, it’s like a flutter of joyful colours that instantly lifts the spirit. Whether it’s for a special occasion or just because, this arrangement is sure to make someone's day. And with blooms that keep getting more beautiful over time, it’s a thoughtful gift that brings lasting joy without costing a fortune.",
+        "shortDescription": "With free Lindt chocolate\nFresh bouquet straight from the grower\nFast delivery by a courier",
+        "imageUrl": "https://euroflorist.ergonode.cloud/api/multimedia/file/36c73ccb-7cb9-4661-8a11-264e97232f62.jpg",
+        "status": "live",
+        "commodity_type": "physical",
+        "mpn": "a80e5cd4-f7e0-4c5f-a6b9-aee994c79c03",
+        "upc_ean": ""
+      }
+    }
+  },
+  {
+    "data": {
+      "type": "product",
+      "attributes": {
+        "name": "Pink & Purple Field bouquet",
+        "slug": "pink-and-purple-field-bouquet",
+        "sku": "NP25FLO0112",
+        "description": "Bursting with cheerful pinks and purples, this seasonal summer bouquet is sunshine in a vase. Fresh, playful and full of colour, it’s the perfect way to brighten someone’s day – no special occasion needed!",
+        "shortDescription": "Personal same-day delivery\nExclusive florist craftsmanship\nEvery bouquet is unique\nAdd chocolate for extra luxury",
+        "imageUrl": "https://euroflorist.ergonode.cloud/api/multimedia/file/74da8a58-5ab9-4125-a23b-14ba4c79b32a.jpg",
+        "status": "live",
+        "commodity_type": "physical",
+        "mpn": "f7eb05d1-a283-4c70-bb8e-14bb9a30c194",
+        "upc_ean": ""
+      }
+    }
+  },
+  {
+    "data": {
+      "type": "product",
+      "attributes": {
+        "name": "Fabulous colors",
+        "slug": "fabulous-colors",
+        "sku": "BOU17_183",
+        "description": "Rich tones of pink, orange and purple add a brilliant pop of colour to your giftee’s day. Hand-tied with the finest seasonal blooms, such as roses, eustoma, asclepias and gerbera. Experience the perfect balance of quality and affordability with this stunning composition.",
+        "shortDescription": "Personal same-day delivery\nExclusive florist craftsmanship\nEvery bouquet is unique\nAdd chocolate for extra luxury",
+        "imageUrl": "https://euroflorist.ergonode.cloud/api/multimedia/file/dc7fac84-1387-42bd-bce9-2d96ff73d9c2.jpg",
+        "status": "live",
+        "commodity_type": "physical",
+        "mpn": "b32bd599-913a-4ce3-89a8-c9f1d965b5c6",
+        "upc_ean": ""
+      }
+    }
+  },
+  {
+    "data": {
+      "type": "product",
+      "attributes": {
+        "name": "Pastel Bloom",
+        "slug": "pastel-bloom",
+        "sku": "NP25FLO0098",
+        "description": "An elegant and summery bouquet featuring pale peach santini, light pink alstroemeria, apricot carnations, pink roses, blue/purple asters, cream-colored germinis, and Green Bell thlaspie. With its peachy and pink tones, it's a bouquet that charms anyone.",
+        "shortDescription": "Personal same-day delivery\nExclusive florist craftsmanship\nEvery bouquet is unique\nAdd chocolate for extra luxury",
+        "imageUrl": "https://euroflorist.ergonode.cloud/api/multimedia/file/4347a602-42f2-46ad-a7a9-fcc97b29c287.jpg",
+        "status": "live",
+        "commodity_type": "physical",
+        "mpn": "8c254619-8b7a-4108-8026-4cb228fb15e2",
+        "upc_ean": ""
+      }
+    }
+  }
+]

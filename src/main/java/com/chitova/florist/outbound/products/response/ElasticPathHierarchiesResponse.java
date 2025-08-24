@@ -1,4 +1,4 @@
-package com.chitova.florist.outbound.products.models;
+package com.chitova.florist.outbound.products.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ElasticPathCloudHierarchyChildNodesResponse {
+public class ElasticPathHierarchiesResponse {
 
     private List<DataItem> data;
     private Meta meta;
@@ -28,22 +28,10 @@ public class ElasticPathCloudHierarchyChildNodesResponse {
         @Data
         public static class Relationships {
             private Children children;
-            private Products products;
 
             @Data
             public static class Children {
                 private List<DataItem> data;
-                private Links links;
-
-                @Data
-                public static class Links {
-                    private String related;
-                }
-            }
-
-            @Data
-            public static class Products {
-                private List<Object> data; // Assuming products can be any type or define a Product class
                 private Links links;
 
                 @Data
@@ -62,9 +50,6 @@ public class ElasticPathCloudHierarchyChildNodesResponse {
 
             @JsonProperty("has_children")
             private boolean hasChildren;
-
-            @JsonProperty("hierarchy_id")
-            private String hierarchyId;
 
             private String owner;
 
