@@ -1,308 +1,188 @@
 package com.chitova.florist.outbound.products.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@Data
-@NoArgsConstructor
-public class ElasticPathProductsResponse {
-
-    @JsonProperty("data")
-    private List<Product> data;
-
-    @JsonProperty("included")
-    private IncludedResources included;
-
-    @JsonProperty("meta")
-    private MetaInformation meta;
-
-    @Data
-    @NoArgsConstructor
-    public static class Product {
-
-        @JsonProperty("id")
-        private String id;
-
-        @JsonProperty("type")
-        private String type;
-
-        @JsonProperty("attributes")
-        private ProductAttributes attributes;
-
-        @JsonProperty("meta")
-        private ProductMeta meta;
-
-        @JsonProperty("relationships")
-        private Map<String, Object> relationships;
+public record ElasticPathProductsResponse(
+        @JsonProperty("data") List<Product> data,
+        @JsonProperty("included") IncludedResources included,
+        @JsonProperty("meta") MetaInformation meta
+) {
+    public ElasticPathProductsResponse {
+        data = data == null ? Collections.emptyList() : data;
     }
 
-    @Data
-    @NoArgsConstructor
-    public static class ProductAttributes {
+    public static record Product(
+            @JsonProperty("id") String id,
+            @JsonProperty("type") String type,
+            @JsonProperty("attributes") ProductAttributes attributes,
+            @JsonProperty("meta") ProductMeta meta,
+            @JsonProperty("relationships") Relationships relationships
+    ) {}
 
-        @JsonProperty("name")
-        private String name;
-
-        @JsonProperty("description")
-        private String description;
-
-        @JsonProperty("slug")
-        private String slug;
-
-        @JsonProperty("sku")
-        private String sku;
-
-        @JsonProperty("status")
-        private String status;
-
-        @JsonProperty("commodity_type")
-        private String commodityType;
-
-        @JsonProperty("upc_ean")
-        private String upcEan;
-
-        @JsonProperty("mpn")
-        private String mpn;
-
-        @JsonProperty("external_ref")
-        private String externalRef;
-
-        @JsonProperty("locales")
-        private Map<String, Object> locales;
-
-        @JsonProperty("tags")
-        private List<String> tags;
-
-        @JsonProperty("extensions")
-        private Extensions extensions;
-
-        @JsonProperty("custom_inputs")
-        private Map<String, Object> customInputs;
-
-        @JsonProperty("build_rules")
-        private BuildRules buildRules;
-
-        @JsonProperty("components")
-        private Map<String, Object> components;
+    public static record ProductAttributes(
+            @JsonProperty("name") String name,
+            @JsonProperty("description") String description,
+            @JsonProperty("slug") String slug,
+            @JsonProperty("sku") String sku,
+            @JsonProperty("status") String status,
+            @JsonProperty("commodity_type") String commodityType,
+            @JsonProperty("upc_ean") String upcEan,
+            @JsonProperty("mpn") String mpn,
+            @JsonProperty("external_ref") String externalRef,
+            @JsonProperty("locales") Map<String, Object> locales,
+            @JsonProperty("tags") List<String> tags,
+            @JsonProperty("extensions") Extensions extensions,
+            @JsonProperty("custom_inputs") Map<String, Object> customInputs,
+            @JsonProperty("build_rules") BuildRules buildRules,
+            @JsonProperty("components") Map<String, Object> components
+    ) {
+        public ProductAttributes {
+            locales = locales == null ? Collections.emptyMap() : locales;
+            tags = tags == null ? Collections.emptyList() : tags;
+            customInputs = customInputs == null ? Collections.emptyMap() : customInputs;
+            components = components == null ? Collections.emptyMap() : components;
+        }
     }
 
-    @Data
-    @NoArgsConstructor
-    public static class Extensions {
+    public static record Extensions(
+            @JsonProperty("products(flower)") ProductFlower productFlower
+    ) {}
 
-        @JsonProperty("products(flower)")
-        private ProductFlower productFlower;
+    public static record ProductFlower(
+            @JsonProperty("additional-information") String additionalInformation,
+            @JsonProperty("information") String information
+    ) {}
+
+    public static record BuildRules(
+            @JsonProperty("default") String defaultRule,
+            @JsonProperty("include") List<List<String>> include,
+            @JsonProperty("exclude") List<List<String>> exclude
+    ) {
+        public BuildRules {
+            include = include == null ? Collections.emptyList() : include;
+            exclude = exclude == null ? Collections.emptyList() : exclude;
+        }
     }
 
-    @Data
-    @NoArgsConstructor
-    public static class ProductFlower {
-
-        @JsonProperty("additional-information")
-        private String additionalInformation;
-
-        @JsonProperty("information")
-        private String information;
+    public static record ProductMeta(
+            @JsonProperty("created_at") String createdAt,
+            @JsonProperty("updated_at") String updatedAt,
+            @JsonProperty("owner") String owner,
+            @JsonProperty("variations") List<Variation> variations,
+            @JsonProperty("custom_relationships") List<Object> customRelationships,
+            @JsonProperty("child_variations") List<ChildVariation> childVariations,
+            @JsonProperty("product_types") List<String> productTypes,
+            @JsonProperty("variation_matrix") Map<String, Object> variationMatrix
+    ) {
+        public ProductMeta {
+            variations = variations == null ? Collections.emptyList() : variations;
+            customRelationships = customRelationships == null ? Collections.emptyList() : customRelationships;
+            childVariations = childVariations == null ? Collections.emptyList() : childVariations;
+            productTypes = productTypes == null ? Collections.emptyList() : productTypes;
+            variationMatrix = variationMatrix == null ? Collections.emptyMap() : variationMatrix;
+        }
     }
 
-    @Data
-    @NoArgsConstructor
-    public static class BuildRules {
-
-        @JsonProperty("default")
-        private String defaultRule;
-
-        @JsonProperty("include")
-        private List<List<String>> include;
-
-        @JsonProperty("exclude")
-        private List<List<String>> exclude;
+    public static record Variation(
+            @JsonProperty("id") String id,
+            @JsonProperty("name") String name,
+            @JsonProperty("options") List<Option> options
+    ) {
+        public Variation {
+            options = options == null ? Collections.emptyList() : options;
+        }
     }
 
-    @Data
-    @NoArgsConstructor
-    public static class ProductMeta {
-
-        @JsonProperty("created_at")
-        private String createdAt;
-
-        @JsonProperty("updated_at")
-        private String updatedAt;
-
-        @JsonProperty("owner")
-        private String owner;
-
-        @JsonProperty("variations")
-        private List<Variation> variations = new ArrayList<>();
-
-        @JsonProperty("custom_relationships")
-        private List<Object> customRelationships;
-
-        @JsonProperty("child_variations")
-        private List<ChildVariation> childVariations = new ArrayList<>();
-
-        @JsonProperty("product_types")
-        private List<String> productTypes = new ArrayList<>();
-
-        @JsonProperty("variation_matrix")
-        private Map<String, Object> variationMatrix;
+    public static record ChildVariation(
+            @JsonProperty("id") String id,
+            @JsonProperty("name") String name,
+            @JsonProperty("sort_order") int sortOrder,
+            @JsonProperty("options") List<Option> options,
+            @JsonProperty("option") Option singleOption
+    ) {
+        public ChildVariation {
+            options = options == null ? Collections.emptyList() : options;
+        }
     }
 
-    @Data
-    @NoArgsConstructor
-    public static class Variation {
+    public static record Option(
+            @JsonProperty("id") String id,
+            @JsonProperty("name") String name,
+            @JsonProperty("description") String description,
+            @JsonProperty("sort_order") Integer sortOrder
+    ) {}
 
-        @JsonProperty("id")
-        private String id;
-
-        @JsonProperty("name")
-        private String name;
-
-        @JsonProperty("options")
-        private List<Option> options;
+    public static record IncludedResources(
+            @JsonProperty("main_images") List<FileResource> mainImages,
+            @JsonProperty("component_products") List<Product> componentProducts,
+            @JsonProperty("files") List<FileResource> files
+    ) {
+        public IncludedResources {
+            mainImages = mainImages == null ? Collections.emptyList() : mainImages;
+            componentProducts = componentProducts == null ? Collections.emptyList() : componentProducts;
+            files = files == null ? Collections.emptyList() : files;
+        }
     }
 
-    @Data
-    @NoArgsConstructor
-    public static class ChildVariation {
+    public static record FileResource(
+            @JsonProperty("id") String id,
+            @JsonProperty("type") String type,
+            @JsonProperty("file_name") String fileName,
+            @JsonProperty("mime_type") String mimeType,
+            @JsonProperty("file_size") int fileSize,
+            @JsonProperty("public") boolean isPublic,
+            @JsonProperty("meta") FileMeta meta,
+            @JsonProperty("links") Link links,
+            @JsonProperty("link") MetaLink link
+    ) {}
 
-        @JsonProperty("id")
-        private String id;
-
-        @JsonProperty("name")
-        private String name;
-
-        @JsonProperty("sort_order")
-        private int sortOrder;
-
-        @JsonProperty("options")
-        private List<Option> options;
-
-        @JsonProperty("option")
-        private Option singleOption;
+    public static record FileMeta(
+            @JsonProperty("timestamps") Map<String, String> timestamps,
+            @JsonProperty("dimensions") Dimensions dimensions
+    ) {
+        public FileMeta {
+            timestamps = timestamps == null ? Collections.emptyMap() : timestamps;
+        }
     }
 
+    public static record Dimensions(
+            @JsonProperty("width") int width,
+            @JsonProperty("height") int height
+    ) {}
 
-    @Data
-    @NoArgsConstructor
-    public static class Option {
+    public static record Link(@JsonProperty("self") String self) {}
 
-        @JsonProperty("id")
-        private String id;
-
-        @JsonProperty("name")
-        private String name;
-
-        @JsonProperty("description")
-        private String description;
+    public static record MetaLink(
+            @JsonProperty("href") String href,
+            @JsonProperty("meta") Map<String, Object> meta
+    ) {
+        public MetaLink {
+            meta = meta == null ? Collections.emptyMap() : meta;
+        }
     }
 
-    @Data
-    @NoArgsConstructor
-    public static class IncludedResources {
+    public static record MetaInformation(@JsonProperty("results") Results results) {}
 
-        @JsonProperty("main_images")
-        private List<FileResource> mainImages;
+    public static record Results(@JsonProperty("total") int total) {}
 
-        @JsonProperty("component_products")
-        private List<Product> componentProducts;
+    public static record Relationships(
+            @JsonProperty("base_product") Relationship baseProduct,
+            @JsonProperty("children") Relationship children,
+            @JsonProperty("component_products") Relationship componentProducts,
+            @JsonProperty("custom_relationships") Relationship customRelationships,
+            @JsonProperty("files") Relationship files,
+            @JsonProperty("main_image") Relationship mainImage,
+            @JsonProperty("templates") Relationship templates,
+            @JsonProperty("variations") Relationship variations
+    ) {}
 
-        @JsonProperty("files")
-        private List<FileResource> files;
-    }
+    public static record Relationship(@JsonProperty("data") RelationshipData data) {}
 
-    @Data
-    @NoArgsConstructor
-    public static class FileResource {
-
-        @JsonProperty("id")
-        private String id;
-
-        @JsonProperty("type")
-        private String type;
-
-        @JsonProperty("file_name")
-        private String fileName;
-
-        @JsonProperty("mime_type")
-        private String mimeType;
-
-        @JsonProperty("file_size")
-        private int fileSize;
-
-        @JsonProperty("public")
-        private boolean isPublic;
-
-        @JsonProperty("meta")
-        private FileMeta meta;
-
-        @JsonProperty("links")
-        private Link links;
-
-        @JsonProperty("link")
-        private MetaLink link;
-    }
-
-    @Data
-    @NoArgsConstructor
-    public static class FileMeta {
-
-        @JsonProperty("timestamps")
-        private Map<String, String> timestamps;
-
-        @JsonProperty("dimensions")
-        private Dimensions dimensions;
-    }
-
-    @Data
-    @NoArgsConstructor
-    public static class Dimensions {
-
-        @JsonProperty("width")
-        private int width;
-
-        @JsonProperty("height")
-        private int height;
-    }
-
-    @Data
-    @NoArgsConstructor
-    public static class Link {
-
-        @JsonProperty("self")
-        private String self;
-    }
-
-    @Data
-    @NoArgsConstructor
-    public static class MetaLink {
-
-        @JsonProperty("href")
-        private String href;
-
-        @JsonProperty("meta")
-        private Map<String, Object> meta;
-    }
-
-    @Data
-    @NoArgsConstructor
-    public static class MetaInformation {
-
-        @JsonProperty("results")
-        private Results results;
-    }
-
-
-    @Data
-    @NoArgsConstructor
-    public static class Results {
-
-        @JsonProperty("total")
-        private int total;
-    }
+    public static record RelationshipData(
+            @JsonProperty("type") String type,
+            @JsonProperty("id") String id
+    ) {}
 }

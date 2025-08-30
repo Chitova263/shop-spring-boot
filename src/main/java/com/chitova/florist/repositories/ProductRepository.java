@@ -1,6 +1,6 @@
 package com.chitova.florist.repositories;
 
-import com.chitova.florist.entities.product.Product;
+import com.chitova.florist.domain.product.Product;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

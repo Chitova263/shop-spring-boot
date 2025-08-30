@@ -1,10 +1,8 @@
-package com.chitova.florist.entities.configuration;
+package com.chitova.florist.domain.configuration;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class OpenIdConnectConfiguration {
     private String issuer;
     private String provider;

@@ -1,4 +1,4 @@
-package com.chitova.florist.entities.cart;
+package com.chitova.florist.domain.cart;
 
 import lombok.Builder;
 import lombok.Getter;

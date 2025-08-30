@@ -25,13 +25,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                     .requestMatchers("/configuration",
-                            "/admin",
+                            "/admin/**",
                             "/products",
                             "/v3/api-docs/**",
                             "/swagger-ui/**",
                             "/swagger-ui.html")
                         .permitAll()
-                    .anyRequest().permitAll()
+                    .anyRequest().authenticated()
                 )
                .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt

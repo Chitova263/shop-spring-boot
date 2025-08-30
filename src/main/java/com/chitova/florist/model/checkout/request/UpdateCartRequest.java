@@ -1,24 +1,22 @@
-package com.chitova.florist.model.checkout;
+package com.chitova.florist.model.checkout.request;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
-@Builder
 @Data
-public class UpdateCartResponse {
+public class UpdateCartRequest {
     @Schema(description = "Cart identifier")
     private String cartId;
 
+    @NotNull
     @Schema(description = "Cart items")
-    private List<UpdateCartResponse.CartItem> cartItems;
+    private List<CartLineItem> lineItems;
 
-    @Builder
     @Data
-    public static class CartItem {
+    public static class CartLineItem {
         @NotNull
         @Schema(description = "Product SKU code")
         private String sku;

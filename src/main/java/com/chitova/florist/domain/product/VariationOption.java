@@ -1,10 +1,10 @@
-package com.chitova.florist.entities.product;
+package com.chitova.florist.domain.product;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
-@Setter
 @Builder
 public class VariationOption {
     @Field(name = "elastic_path_cloud_variation_option_id")

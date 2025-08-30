@@ -1,18 +1,17 @@
 package com.chitova.florist.services.sync;
 
-import com.chitova.florist.entities.product.*;
+import com.chitova.florist.domain.product.*;
 import com.chitova.florist.outbound.products.ElasticPathProductResponseAccessor;
 import com.chitova.florist.outbound.products.response.ElasticPathProductsResponse;
-import org.bson.types.ObjectId;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public final class ProductMapper {
-    public static ChildProduct toChildProduct(final ElasticPathProductsResponse.Product product) {
-        return ChildProduct.builder()
+    public static ProductVariant toChildProduct(final ElasticPathProductsResponse.Product product) {
+        return ProductVariant.builder()
                 .elasticPathCloudProductId(product.getId())
-                .elasticPathCloudParentProductId(ElasticPathProductResponseAccessor.getElasticPathCloudParentId(product))
+                .elasticPathCloudParentProductId(ElasticPathProductResponseAccessor.getElasticPathCloudParentProductId(product))
                 .sku(product.getAttributes().getSku())
                 .name(product.getAttributes().getName())
                 .bestseller(false)
@@ -46,17 +45,16 @@ public final class ProductMapper {
     }
 
     public static Product toProduct(final ElasticPathProductsResponse.Product product,
-                                    final List<ChildProduct> childProducts,
+                                    final List<ProductVariant> productVariants,
                                     final HashMap<String, ArrayList<Category>> productToCategoryMap) {
         return Product.builder()
-                .id(new ObjectId())
                 .sku(product.getAttributes().getSku())
                 .name(product.getAttributes().getName())
                 .bestseller(false)
                 .information(ElasticPathProductResponseAccessor.getInformation(product))
                 .additionalInformation(ElasticPathProductResponseAccessor.getAdditionalInformation(product))
                 .elasticPathCloudProductId(product.getId())
-                .childProducts(ProductMapper.getChildProducts(product, childProducts))
+                .productVariants(ProductMapper.getChildProducts(product, productVariants))
                 .categories(ProductMapper.getCategories(product, productToCategoryMap))
                 .build();
     }
@@ -66,10 +64,10 @@ public final class ProductMapper {
         return new HashSet<>(productToCategoryMap.get(product.getAttributes().getSku()));
     }
 
-    private static Set<ChildProduct> getChildProducts(final ElasticPathProductsResponse.Product product,
-                                                      final List<ChildProduct> childProducts) {
-        return childProducts.stream()
-                .filter(childProduct -> childProduct.getElasticPathCloudParentProductId().equals(product.getId()))
+    private static Set<ProductVariant> getChildProducts(final ElasticPathProductsResponse.Product product,
+                                                        final List<ProductVariant> productVariants) {
+        return productVariants.stream()
+                .filter(productVariant -> productVariant.getElasticPathCloudParentProductId().equals(product.getId()))
                 .collect(Collectors.toSet());
     }
 }

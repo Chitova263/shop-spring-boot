@@ -2,11 +2,15 @@ package com.chitova.florist.outbound.products;
 
 import com.chitova.florist.outbound.products.request.ElasticPathCreateNodeRelationshipToProductsRequest;
 import com.chitova.florist.outbound.products.request.ElasticPathCreateProductRequest;
+import com.chitova.florist.outbound.products.request.ElasticPathCreateProductVariationRelationshipRequest;
 import com.chitova.florist.outbound.products.response.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.concurrent.CompletableFuture;
 
 @Component
 public class ElasticPathProductExperienceManagerClient {
@@ -37,6 +41,16 @@ public class ElasticPathProductExperienceManagerClient {
 
     @Value("${elasticpathcloud.pcm.associateNodeToProducts.path}")
     private String associateNodeToProductsPath;
+
+    @Value("${elasticpathcloud.pcm.getProductPrices.path}")
+    private String getProductPricesPath;
+
+    @Value("${elasticpathcloud.pcm.getPriceBooks.path}")
+    private String getPriceBooksPath;
+
+    @Value("${elasticpathcloud.pcm.createProductVariationRelationship.path}")
+    private String createProductVariationRelationshipPath;
+
     private final WebClient webClient;
 
     public ElasticPathProductExperienceManagerClient(final @Qualifier("ElasticPathProductExperienceManagerClient") WebClient webClient) {
@@ -53,7 +67,8 @@ public class ElasticPathProductExperienceManagerClient {
                 .block();
     }
 
-    public ElasticPathHierarchyChildNodesResponse getHierarchyChildNodes(final String hierarchyId) {
+    @Async
+    public CompletableFuture<ElasticPathHierarchyChildNodesResponse> getHierarchyChildNodes(final String hierarchyId) {
         return webClient
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -61,10 +76,11 @@ public class ElasticPathProductExperienceManagerClient {
                         .build(hierarchyId))
                 .retrieve()
                 .bodyToMono(ElasticPathHierarchyChildNodesResponse.class)
-                .block();
+                .toFuture();
     }
 
-    public ElasticPathNodeChildrenResponse getNodeChildrenResponse(final String hierarchyId, final String nodeId) {
+    @Async
+    public CompletableFuture<ElasticPathNodeChildrenResponse> getNodeChildrenResponse(final String hierarchyId, final String nodeId) {
         return webClient
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -72,7 +88,7 @@ public class ElasticPathProductExperienceManagerClient {
                         .build(hierarchyId, nodeId))
                 .retrieve()
                 .bodyToMono(ElasticPathNodeChildrenResponse.class)
-                .block();
+                .toFuture();
     }
 
     public ElasticPathProductsResponse getProducts() {
@@ -111,7 +127,8 @@ public class ElasticPathProductExperienceManagerClient {
                 .block();
     }
 
-    public ElasticPathNodeProductsResponse getNodeProducts(final String hierarchyId, final String nodeId) {
+    @Async
+    public CompletableFuture<ElasticPathNodeProductsResponse> getNodeProducts(final String hierarchyId, final String nodeId) {
             return webClient
                     .get()
                     .uri(uriBuilder -> uriBuilder
@@ -119,7 +136,7 @@ public class ElasticPathProductExperienceManagerClient {
                             .build(hierarchyId, nodeId))
                     .retrieve()
                     .bodyToMono(ElasticPathNodeProductsResponse.class)
-                    .block();
+                    .toFuture();
     }
 
     public ElasticPathVariationsResponse getVariations() {
@@ -130,6 +147,42 @@ public class ElasticPathProductExperienceManagerClient {
                         .build())
                 .retrieve()
                 .bodyToMono(ElasticPathVariationsResponse.class)
+                .block();
+    }
+
+    public ElasticPathProductPricesResponse getProductPrices(final String priceBookId) {
+        return webClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(getProductPricesPath)
+                        .build(priceBookId))
+                .retrieve()
+                .bodyToMono(ElasticPathProductPricesResponse.class)
+                .block();
+    }
+
+    public ElasticPathPricebooksResponse getPricebooks() {
+        return webClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(getPriceBooksPath)
+                        .build())
+                .retrieve()
+                .bodyToMono(ElasticPathPricebooksResponse.class)
+                .block();
+    }
+
+    public Void createProductVariationRelationship(final ElasticPathCreateProductVariationRelationshipRequest request,
+                                                   final String productId) {
+        return webClient
+                .post()
+                .uri(uriBuilder -> uriBuilder
+                        .path(createProductVariationRelationshipPath)
+                        .build(productId))
+                .bodyValue(request)
+                .retrieve()
+                .toBodilessEntity()
+                .then()
                 .block();
     }
 }

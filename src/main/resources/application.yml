@@ -26,6 +26,9 @@ elasticpathcloud:
     associateNodeToProducts.path: /hierarchies/{hierarchyId}/nodes/{nodeId}/relationships/products
     getVariations.path: /variations
     getClientCredentials.path: /oauth/access_token
+    getProductPrices.path: /pricebooks/{pricebookId}/prices
+    getPriceBooks.path: /pricebooks
+    createProductVariationRelationship.path: /products/{productId}/relationships/variations
   accounts:
     baseUrl: https://useast.api.elasticpath.com
     generateAccountManagementAuthorizationToken.path: v2/account-members/tokens

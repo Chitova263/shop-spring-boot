@@ -1,6 +1,6 @@
 package com.chitova.florist.services.seeder;
 
-import com.chitova.florist.entities.product.Category;
+import com.chitova.florist.domain.product.Category;
 import com.chitova.florist.outbound.products.ElasticPathProductExperienceManagerClient;
 import com.chitova.florist.outbound.products.response.ElasticPathCreateProductResponse;
 import com.chitova.florist.repositories.CategoryRepository;

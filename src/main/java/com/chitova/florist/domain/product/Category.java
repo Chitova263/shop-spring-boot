@@ -1,21 +1,22 @@
-package com.chitova.florist.entities.product;
+package com.chitova.florist.domain.product;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NonNull;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
+
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Getter
 @Builder
 @Document(collection = "category")
 public class Category {
-    @Id
-    @Field(name = "category_id")
+    @MongoId
     private ObjectId id;
 
     @Field(name = "name")
@@ -27,15 +28,17 @@ public class Category {
     @Field(name = "slug")
     private String slug;
 
-    @Field(name = "elastic_path_cloud_category_id")
+    @NonNull
+    @Field(name = "elasticPathCloudCategoryId")
     private String elasticPathCloudCategoryId;
 
-    @Field(name = "elastic_path_cloud_hierarchy_id")
+    @NonNull
+    @Field(name = "elasticPathCloudHierarchyId")
     private String elasticPathCloudHierarchyId;
-
-    @Field(name = "hasChildren")
-    private boolean hasChildren;
 
     @Field(name = "subcategories")
     private List<Category> subcategories;
+
+    @Transient
+    private boolean hasSubcategories;
 }

@@ -1,12 +1,13 @@
-package com.chitova.florist.entities.cart;
+package com.chitova.florist.domain.cart;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.List;
 
@@ -15,17 +16,17 @@ import java.util.List;
 @Builder
 @Document(collection = "cart")
 public class Cart {
-
-    @Id
+    @MongoId
     @Field(name = "cart_id")
     private ObjectId id;
 
     @Field(name = "elastic_path_cloud_cart_id")
     private String elasticPathCloudCartId;
 
-    @Field(name = "cart_items")
-    private List<CartItem> cartItems;
+    @Indexed(unique = true)
+    @Field(name = "customer_id")
+    private String customerId;
 
-    @Field(name = "user_id")
-    private String userId;
+    @Field(name = "cart_items")
+    private List<CartItem> cartLineItems;
 }

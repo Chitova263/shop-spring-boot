@@ -1,5 +1,6 @@
 package com.chitova.florist.outbound.products;
 
+import com.chitova.florist.domain.product.ProductType;
 import com.chitova.florist.outbound.products.response.ElasticPathProductsResponse;
 
 import java.util.*;
@@ -12,37 +13,39 @@ public final class ElasticPathProductResponseAccessor {
 
     public static String getInformation(final ElasticPathProductsResponse.Product product) {
         return Optional.ofNullable(product)
-                .map(ElasticPathProductsResponse.Product::getAttributes)
-                .map(ElasticPathProductsResponse.ProductAttributes::getExtensions)
-                .map(ElasticPathProductsResponse.Extensions::getProductFlower)
-                .map(ElasticPathProductsResponse.ProductFlower::getInformation)
+                .map(ElasticPathProductsResponse.Product::attributes)
+                .map(ElasticPathProductsResponse.ProductAttributes::extensions)
+                .map(ElasticPathProductsResponse.Extensions::productFlower)
+                .map(ElasticPathProductsResponse.ProductFlower::information)
                 .orElse(null);
     }
 
     public static String getAdditionalInformation(final ElasticPathProductsResponse.Product product) {
         return Optional.ofNullable(product)
-                .map(ElasticPathProductsResponse.Product::getAttributes)
-                .map(ElasticPathProductsResponse.ProductAttributes::getExtensions)
-                .map(ElasticPathProductsResponse.Extensions::getProductFlower)
-                .map(ElasticPathProductsResponse.ProductFlower::getAdditionalInformation)
+                .map(ElasticPathProductsResponse.Product::attributes)
+                .map(ElasticPathProductsResponse.ProductAttributes::extensions)
+                .map(ElasticPathProductsResponse.Extensions::productFlower)
+                .map(ElasticPathProductsResponse.ProductFlower::additionalInformation)
                 .orElse(null);
     }
 
-    public static String getElasticPathCloudParentId(final ElasticPathProductsResponse.Product product) {
-        if (product.getRelationships() == null) {
-            throw new IllegalArgumentException("relationships is null");
-        }
-        if (product.getRelationships().get("base_product") instanceof Map<?, ?> baseProduct
-                && baseProduct.get("data") instanceof Map<?, ?> obj
-                && obj.get("id") != null) {
-            return obj.get("id").toString();
-        }
-
-        return null;
+    public static String getElasticPathCloudParentProductId(final ElasticPathProductsResponse.Product product) {
+        return Optional.ofNullable(product)
+                .map(ElasticPathProductsResponse.Product::relationships)
+                .map(ElasticPathProductsResponse.Relationships::baseProduct)
+                .map(ElasticPathProductsResponse.Relationship::data)
+                .map(ElasticPathProductsResponse.RelationshipData::id)
+                .orElse(null);
     }
 
+
+    public static ProductType getProductType(ElasticPathProductsResponse.Product product) {
+        return ProductType.from(product.type()).orElseThrow();
+    }
+
+
     public static List<ElasticPathProductsResponse.ChildVariation> getChildVariations(final ElasticPathProductsResponse.Product product) {
-        return Optional.ofNullable(product.getMeta().getChildVariations()).orElse(new ArrayList<>());
+        return Optional.ofNullable(product.meta().childVariations()).orElse(Collections.emptyList());
     }
 
     public static boolean isParentOrStandardProduct(final ElasticPathProductsResponse.Product product) {

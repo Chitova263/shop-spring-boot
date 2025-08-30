@@ -1,4 +1,4 @@
-package com.chitova.florist.model.checkout;
+package com.chitova.florist.model.checkout.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

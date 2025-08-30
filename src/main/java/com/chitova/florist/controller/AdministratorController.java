@@ -30,21 +30,35 @@ class AdministratorController {
 
     @Operation()
     @PostMapping("/synchronize/catalog")
-    public ResponseEntity syncProducts() {
+    public ResponseEntity<?> syncProducts() {
         productSyncService.updateCatalog();
         return ResponseEntity.noContent().build();
     }
 
     @Operation()
+    @PostMapping("/synchronize/pricebooks")
+    public ResponseEntity<?> syncPricebooks() {
+        productSyncService.updatePricebooks();
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation()
+    @PostMapping("/synchronize/prices")
+    public ResponseEntity<?> syncPrices() {
+        productSyncService.updateProductPrices();
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation()
     @PostMapping("/synchronize/seed")
-    public ResponseEntity seed() throws IOException {
+    public ResponseEntity<?> seed() throws IOException {
         seederService.seedCatalog();
         return ResponseEntity.noContent().build();
     }
 
     @Operation()
     @PostMapping("/synchronize/accounts")
-    public ResponseEntity syncAccounts() {
+    public ResponseEntity<?> syncAccounts() {
         accountSettingsSyncService.syncAccountSettings();
         return ResponseEntity.noContent().build();
     }
